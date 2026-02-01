@@ -1,0 +1,128 @@
+.about-page {
+    min-height: 100vh;
+}
+
+.about-hero {
+    background: linear-gradient(135deg, var(--color-wine) 0%, var(--color-wine-dark) 100%);
+    color: white;
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+    background: linear-gradient(135deg, #1a0f0f 0%, #2d1a1a 50%, #1a0f0f 100%);
+}
+
+.about-hero-content h1 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.tagline {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-beige);
+}
+
+.brand-story {
+    padding: var(--spacing-xl) 0;
+    background: var(--color-beige-light);
+}
+
+.story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+.story-content h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 2rem;
+    color: var(--color-wine);
+}
+
+.story-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--color-gray);
+}
+
+.story-image .image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+}
+
+.values-section {
+    padding: var(--spacing-xl) 0;
+    background: white;
+}
+
+.section-title {
+    text-align: center;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-wine);
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.value-card {
+    background: var(--color-cream);
+    padding: 2.5rem;
+    text-align: center;
+    transition: var(--transition-smooth);
+}
+
+.value-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(114, 47, 55, 0.15);
+}
+
+.value-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-wine);
+}
+
+.value-card p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-gray);
+}
+
+.about-cta {
+    background: var(--color-wine);
+    color: white;
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+    background: linear-gradient(135deg, #1a0f0f 0%, #2d1a1a 50%, #1a0f0f 100%);
+}
+
+.about-cta h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.about-cta p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 768px) {
+    .story-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .story-image .image-wrapper {
+        height: 400px;
+    }
+}

@@ -1,0 +1,604 @@
+
+> my-app@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.5 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.29.193:3000
+
+✓ Starting...
+✓ Ready in 1151ms
+ GET / 200 in 1676ms (compile: 1268ms, render: 408ms)
+ GET /categories 200 in 1306ms (compile: 1197ms, render: 108ms)
+ GET /products/tops 200 in 1031ms (compile: 1009ms, render: 22ms)
+ GET /categories 200 in 262ms (compile: 92ms, render: 170ms)
+ GET /products/tops 200 in 47ms (compile: 25ms, render: 22ms)
+ GET / 200 in 114ms (compile: 15ms, render: 99ms)
+ GET /categories 200 in 182ms (compile: 81ms, render: 102ms)
+Error: Route "/products/[category]" used `params.category`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductsPage (app/products/[category]/page.tsx:10:47)
+   8 |
+   9 | export default function ProductsPage({ params }: { params: { category: string } }) {
+> 10 |     const category = getCategoryBySlug(params.category);
+     |                                               ^
+  11 |     const products = getProductsByCategory(params.category);
+  12 |
+  13 |     // State for hover effect
+Error: Route "/products/[category]" used `params.category`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductsPage (app/products/[category]/page.tsx:11:51)
+   9 | export default function ProductsPage({ params }: { params: { category: string } }) {
+  10 |     const category = getCategoryBySlug(params.category);
+> 11 |     const products = getProductsByCategory(params.category);
+     |                                                   ^
+  12 |
+  13 |     // State for hover effect
+  14 |     const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
+ GET /products/tops 200 in 653ms (compile: 136ms, render: 517ms)
+Error: Route "/products/[category]" used `params.category`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductsPage (app/products/[category]/page.tsx:10:47)
+   8 |
+   9 | export default function ProductsPage({ params }: { params: { category: string } }) {
+> 10 |     const category = getCategoryBySlug(params.category);
+     |                                               ^
+  11 |     const products = getProductsByCategory(params.category);
+  12 |
+  13 |     // State for hover effect
+Error: Route "/products/[category]" used `params.category`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductsPage (app/products/[category]/page.tsx:11:51)
+   9 | export default function ProductsPage({ params }: { params: { category: string } }) {
+  10 |     const category = getCategoryBySlug(params.category);
+> 11 |     const products = getProductsByCategory(params.category);
+     |                                                   ^
+  12 |
+  13 |     // State for hover effect
+  14 |     const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
+ GET /products/dresses 200 in 549ms (compile: 174ms, render: 375ms)
+Error: Route "/product/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductDetailPage (app/product/[id]/page.tsx:11:43)
+   9 |
+  10 | export default function ProductDetailPage({ params }: { params: { id: string } }) {
+> 11 |     const product = getProductById(params.id);
+     |                                           ^
+  12 |     const [selectedSize, setSelectedSize] = useState('');
+  13 |     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  14 |     const [addedToCart, setAddedToCart] = useState(false);
+ GET /product/dresses 200 in 2.7s (compile: 2.6s, render: 95ms)
+ GET / 200 in 907ms (compile: 361ms, render: 546ms)
+Error: Route "/product/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductDetailPage (app/product/[id]/page.tsx:11:43)
+   9 |
+  10 | export default function ProductDetailPage({ params }: { params: { id: string } }) {
+> 11 |     const product = getProductById(params.id);
+     |                                           ^
+  12 |     const [selectedSize, setSelectedSize] = useState('');
+  13 |     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  14 |     const [addedToCart, setAddedToCart] = useState(false);
+ GET /product/dresses 200 in 231ms (compile: 37ms, render: 194ms)
+Error: Route "/product/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductDetailPage (app/product/[id]/page.tsx:11:43)
+   9 |
+  10 | export default function ProductDetailPage({ params }: { params: { id: string } }) {
+> 11 |     const product = getProductById(params.id);
+     |                                           ^
+  12 |     const [selectedSize, setSelectedSize] = useState('');
+  13 |     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  14 |     const [addedToCart, setAddedToCart] = useState(false);
+ GET /product/topd 200 in 163ms (compile: 37ms, render: 127ms)
+Error: Route "/product/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductDetailPage (app/product/[id]/page.tsx:11:43)
+   9 |
+  10 | export default function ProductDetailPage({ params }: { params: { id: string } }) {
+> 11 |     const product = getProductById(params.id);
+     |                                           ^
+  12 |     const [selectedSize, setSelectedSize] = useState('');
+  13 |     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  14 |     const [addedToCart, setAddedToCart] = useState(false);
+ GET /product/tops 200 in 225ms (compile: 46ms, render: 179ms)
+Error: Route "/products/[category]" used `params.category`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductsPage (app/products/[category]/page.tsx:10:47)
+   8 |
+   9 | export default function ProductsPage({ params }: { params: { category: string } }) {
+> 10 |     const category = getCategoryBySlug(params.category);
+     |                                               ^
+  11 |     const products = getProductsByCategory(params.category);
+  12 |
+  13 |     // State for hover effect
+Error: Route "/products/[category]" used `params.category`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ProductsPage (app/products/[category]/page.tsx:11:51)
+   9 | export default function ProductsPage({ params }: { params: { category: string } }) {
+  10 |     const category = getCategoryBySlug(params.category);
+> 11 |     const products = getProductsByCategory(params.category);
+     |                                                   ^
+  12 |
+  13 |     // State for hover effect
+  14 |     const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
+ GET /products/tops 200 in 156ms (compile: 22ms, render: 134ms)
+✓ Compiled in 1638ms
+ GET /products/tops 200 in 1406ms (compile: 391ms, render: 1015ms)
+ GET /categories 200 in 3.1s (compile: 1413ms, render: 1705ms)
+ GET / 200 in 3.3s (compile: 791ms, render: 2.5s)
+ GET /categories 200 in 1553ms (compile: 130ms, render: 1424ms)
+ GET / 200 in 1808ms (compile: 25ms, render: 1784ms)
+ GET / 200 in 1785ms (compile: 35ms, render: 1750ms)
+ GET / 200 in 1144ms (compile: 68ms, render: 1075ms)
+ GET / 200 in 810ms (compile: 22ms, render: 788ms)
+ GET / 200 in 666ms (compile: 12ms, render: 655ms)
+ GET / 200 in 681ms (compile: 19ms, render: 662ms)
+ GET /products/tops 200 in 626ms (compile: 102ms, render: 524ms)
+ GET /categories 200 in 763ms (compile: 37ms, render: 726ms)
+ GET /categories 200 in 587ms (compile: 82ms, render: 505ms)
+ GET /products/tops 200 in 438ms (compile: 19ms, render: 419ms)
+ GET / 200 in 686ms (compile: 15ms, render: 671ms)
+ GET /products/tops 200 in 599ms (compile: 59ms, render: 540ms)
+ GET /products/tops 200 in 588ms (compile: 69ms, render: 519ms)
+ GET /products/tops 200 in 385ms (compile: 9ms, render: 376ms)
+ GET /products/tops 200 in 253ms (compile: 8ms, render: 245ms)
+ GET /products/tops 200 in 145ms (compile: 9ms, render: 136ms)
+✓ Compiled in 344ms
+ GET /products/tops 200 in 501ms (compile: 216ms, render: 285ms)
+ GET /products/tops 200 in 298ms (compile: 162ms, render: 136ms)
+ GET /product/top-001 200 in 568ms (compile: 390ms, render: 178ms)
+ GET /product/top-001 200 in 253ms (compile: 100ms, render: 153ms)
+ GET /product/top-002 200 in 515ms (compile: 328ms, render: 187ms)
+ GET /about 200 in 1697ms (compile: 1646ms, render: 52ms)
+ GET /lookbook 200 in 694ms (compile: 595ms, render: 99ms)
+ GET /contact 200 in 315ms (compile: 297ms, render: 18ms)
+ GET /categories 200 in 63ms (compile: 12ms, render: 51ms)
+ GET /products/dresses 200 in 34ms (compile: 14ms, render: 20ms)
+ GET /product/dress-002 200 in 46ms (compile: 21ms, render: 25ms)
+ GET /cart 200 in 761ms (compile: 552ms, render: 209ms)
+ GET / 200 in 522ms (compile: 202ms, render: 320ms)
+✓ Compiled in 387ms
+ GET /products/dresses 200 in 112ms (compile: 18ms, render: 94ms)
+ GET /products/tops 200 in 847ms (compile: 257ms, render: 590ms)
+ GET / 200 in 1934ms (compile: 28ms, render: 1906ms)
+ GET /product/top-001 200 in 855ms (compile: 525ms, render: 330ms)
+ GET /categories 200 in 1705ms (compile: 643ms, render: 1061ms)
+ GET / 200 in 1733ms (compile: 12ms, render: 1721ms)
+ GET /products/tops 200 in 93ms (compile: 6ms, render: 87ms)
+ GET /products/tops 200 in 633ms (compile: 19ms, render: 614ms)
+ GET /categories 200 in 241ms (compile: 117ms, render: 124ms)
+ GET /products/tops 200 in 68ms (compile: 31ms, render: 37ms)
+ GET /product/top-003 200 in 114ms (compile: 52ms, render: 61ms)
+ GET / 200 in 119ms (compile: 51ms, render: 68ms)
+ GET /products/bottoms 200 in 823ms (compile: 162ms, render: 661ms)
+ GET /products/dress 200 in 1632ms (compile: 467ms, render: 1164ms)
+ GET /products/dresses 200 in 1397ms (compile: 555ms, render: 843ms)
+ GET /categories 200 in 176ms (compile: 84ms, render: 92ms)
+ GET /products/dresses 200 in 104ms (compile: 35ms, render: 69ms)
+ GET /product/dress-003 200 in 124ms (compile: 46ms, render: 77ms)
+ GET / 200 in 132ms (compile: 62ms, render: 70ms)
+ GET /products/outfits 200 in 1035ms (compile: 572ms, render: 463ms)
+ GET /products/bottoms 200 in 453ms (compile: 92ms, render: 361ms)
+ GET /products/dresses 200 in 321ms (compile: 93ms, render: 228ms)
+ GET /about 200 in 499ms (compile: 176ms, render: 323ms)
+ GET / 200 in 376ms (compile: 60ms, render: 316ms)
+ GET /categories 200 in 121ms (compile: 31ms, render: 91ms)
+ GET /lookbook 200 in 158ms (compile: 80ms, render: 78ms)
+ GET / 200 in 49ms (compile: 12ms, render: 37ms)
+ GET /products/tops 200 in 475ms (compile: 156ms, render: 319ms)
+ GET /product/top-004 200 in 378ms (compile: 122ms, render: 257ms)
+ GET / 200 in 106ms (compile: 19ms, render: 87ms)
+✓ Compiled in 716ms
+✓ Compiled in 106ms
+ GET / 200 in 946ms (compile: 312ms, render: 634ms)
+ GET / 200 in 622ms (compile: 243ms, render: 379ms)
+ GET / 200 in 571ms (compile: 151ms, render: 420ms)
+✓ Compiled in 1733ms
+ GET / 200 in 2.2s (compile: 1605ms, render: 567ms)
+ GET / 200 in 2.2s (compile: 1296ms, render: 901ms)
+ GET / 200 in 387ms (compile: 35ms, render: 352ms)
+ GET / 200 in 321ms (compile: 20ms, render: 302ms)
+✓ Compiled in 216ms
+✓ Compiled in 64ms
+✓ Compiled in 51ms
+✓ Compiled in 92ms
+✓ Compiled in 215ms
+ GET / 200 in 551ms (compile: 129ms, render: 423ms)
+ GET / 200 in 160ms (compile: 37ms, render: 122ms)
+✓ Compiled in 90ms
+✓ Compiled in 421ms
+ GET / 200 in 2.2s (compile: 1482ms, render: 675ms)
+ GET / 200 in 439ms (compile: 85ms, render: 355ms)
+ GET / 200 in 126ms (compile: 8ms, render: 118ms)
+ GET / 200 in 86ms (compile: 2ms, render: 84ms)
+✓ Compiled in 101ms
+ GET / 200 in 240ms (compile: 158ms, render: 82ms)
+ GET / 200 in 246ms (compile: 103ms, render: 143ms)
+ GET / 200 in 53ms (compile: 4ms, render: 49ms)
+ GET / 200 in 31ms (compile: 1266µs, render: 30ms)
+✓ Compiled in 218ms
+ GET / 200 in 2.7s (compile: 1079ms, render: 1608ms)
+ GET / 200 in 2.7s (compile: 1802ms, render: 881ms)
+ GET / 200 in 439ms (compile: 72ms, render: 367ms)
+ GET / 200 in 101ms (compile: 3ms, render: 98ms)
+ GET /products/dresses 200 in 574ms (compile: 295ms, render: 279ms)
+ GET /about 200 in 121ms (compile: 38ms, render: 84ms)
+ GET /lookbook 200 in 113ms (compile: 57ms, render: 56ms)
+ GET /cart 200 in 60ms (compile: 33ms, render: 28ms)
+ GET / 200 in 96ms (compile: 29ms, render: 67ms)
+✓ Compiled in 87ms
+✓ Compiled in 55ms
+✓ Compiled in 27ms
+ GET / 200 in 712ms (compile: 19ms, render: 693ms)
+ GET /lookbook 200 in 238ms (compile: 75ms, render: 163ms)
+ GET / 200 in 870ms (compile: 184ms, render: 685ms)
+ GET / 200 in 307ms (compile: 71ms, render: 237ms)
+ GET / 200 in 2.0s (compile: 1103ms, render: 943ms)
+✓ Compiled in 1826ms
+✓ Compiled in 2.7s
+✓ Compiled in 516ms
+✓ Compiled in 509ms
+ GET / 200 in 3.1s (compile: 1956ms, render: 1129ms)
+ GET / 200 in 2.9s (compile: 2.5s, render: 446ms)
+✓ Compiled in 104ms
+✓ Compiled in 228ms
+ GET / 200 in 1208ms (compile: 1002ms, render: 206ms)
+ GET / 200 in 40ms (compile: 7ms, render: 33ms)
+✓ Compiled in 420ms
+✓ Compiled in 466ms
+✓ Compiled in 94ms
+✓ Compiled in 564ms
+ GET / 200 in 2.4s (compile: 1447ms, render: 938ms)
+ GET / 200 in 467ms (compile: 32ms, render: 434ms)
+✓ Compiled in 112ms
+✓ Compiled in 105ms
+ GET / 200 in 3.9s (compile: 3.0s, render: 876ms)
+ GET / 200 in 3.8s (compile: 3.8s, render: 57ms)
+✓ Compiled in 140ms
+✓ Compiled in 151ms
+✓ Compiled in 104ms
+✓ Compiled in 124ms
+✓ Compiled in 368ms
+ GET / 200 in 2.0s (compile: 1280ms, render: 747ms)
+ GET / 200 in 111ms (compile: 24ms, render: 87ms)
+✓ Compiled in 84ms
+✓ Compiled in 59ms
+✓ Compiled in 39ms
+ GET /categories 200 in 584ms (compile: 307ms, render: 277ms)
+✓ Compiled in 169ms
+ GET /about 200 in 187ms (compile: 46ms, render: 141ms)
+ GET /categories 200 in 79ms (compile: 13ms, render: 66ms)
+ GET /lookbook 200 in 113ms (compile: 73ms, render: 40ms)
+ GET /contact 200 in 113ms (compile: 38ms, render: 76ms)
+ GET / 200 in 80ms (compile: 28ms, render: 52ms)
+✓ Compiled in 287ms
+✓ Compiled in 1434ms
+ GET / 200 in 2.8s (compile: 2.5s, render: 321ms)
+ GET / 200 in 2.6s (compile: 2.6s, render: 58ms)
+✓ Compiled in 218ms
+✓ Compiled in 286ms
+✓ Compiled in 429ms
+✓ Compiled in 1061ms
+ GET / 200 in 2.4s (compile: 1915ms, render: 453ms)
+ GET / 200 in 2.3s (compile: 1583ms, render: 757ms)
+✓ Compiled in 407ms
+✓ Compiled in 127ms
+✓ Compiled in 825ms
+ GET /categories 200 in 1019ms (compile: 333ms, render: 687ms)
+ GET /products/tops 200 in 419ms (compile: 189ms, render: 230ms)
+ GET /product/top-002 200 in 172ms (compile: 92ms, render: 80ms)
+ GET / 200 in 138ms (compile: 59ms, render: 79ms)
+✓ Compiled in 94ms
+✓ Compiled in 76ms
+✓ Compiled in 545ms
+ GET / 200 in 1940ms (compile: 1743ms, render: 197ms)
+ GET / 200 in 39ms (compile: 6ms, render: 34ms)
+✓ Compiled in 114ms
+✓ Compiled in 260ms
+ GET / 200 in 1521ms (compile: 1151ms, render: 370ms)
+ GET / 200 in 1769ms (compile: 1501ms, render: 268ms)
+✓ Compiled in 298ms
+ GET / 200 in 1849ms (compile: 1561ms, render: 288ms)
+ GET / 200 in 1816ms (compile: 1733ms, render: 83ms)
+✓ Compiled in 322ms
+ GET / 200 in 474ms (compile: 373ms, render: 101ms)
+ GET / 200 in 468ms (compile: 436ms, render: 32ms)
+✓ Compiled in 71ms
+✓ Compiled in 86ms
+✓ Compiled in 318ms
+ GET / 200 in 1253ms (compile: 986ms, render: 267ms)
+ GET / 200 in 1457ms (compile: 839ms, render: 617ms)
+✓ Compiled in 361ms
+ GET / 200 in 3.0s (compile: 2.9s, render: 67ms)
+ GET / 200 in 3.0s (compile: 2.6s, render: 395ms)
+ GET / 200 in 360ms (compile: 189ms, render: 171ms)
+ GET / 200 in 81ms (compile: 17ms, render: 64ms)
+✓ Compiled in 105ms
+✓ Compiled in 135ms
+✓ Compiled in 233ms
+ GET / 200 in 1995ms (compile: 1860ms, render: 136ms)
+ GET / 200 in 73ms (compile: 20ms, render: 53ms)
+✓ Compiled in 84ms
+✓ Compiled in 88ms
+✓ Compiled in 51ms
+✓ Compiled in 25ms
+✓ Compiled in 88ms
+✓ Compiled in 69ms
+✓ Compiled in 31ms
+✓ Compiled in 161ms
+✓ Compiled in 203ms
+ GET / 200 in 1166ms (compile: 494ms, render: 673ms)
+✓ Compiled in 227ms
+✓ Compiled in 175ms
+✓ Compiled in 73ms
+✓ Compiled in 408ms
+✓ Compiled in 49ms
+✓ Compiled in 138ms
+✓ Compiled in 71ms
+✓ Compiled in 128ms
+✓ Compiled in 31ms
+✓ Compiled in 25ms
+✓ Compiled in 29ms
+ GET / 200 in 1238ms (compile: 151ms, render: 1087ms)
+✓ Compiled in 178ms
+✓ Compiled in 590ms
+⨯ ./app/page.tsx:240:7
+Parsing ecmascript source code failed
+[0m [90m 238 |[39m       [33m<[39m[33m/[39m[33msection[39m[33m>[39m
+ [90m 239 |[39m
+[31m[1m>[22m[39m[90m 240 |[39m     [33m<[39m[33m/[39m[33msection[39m[33m>[39m
+ [90m     |[39m       [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 241 |[39m
+ [90m 242 |[39m       {[90m/* New Collections Section - Clean & White */[39m }
+ [90m 243 |[39m   [33m<[39m[33msection[39m className[33m=[39m[32m"new-collections-section"[39m[33m>[39m[0m
+
+Expected corresponding JSX closing tag for <div>
+
+
+ GET / 500 in 4.4s (compile: 2.5s, render: 1855ms)
+✓ Compiled in 472ms
+⨯ ReferenceError: Plus is not defined
+    at Home (app/page.tsx:282:20)
+  280 |                 <span className="nc-price">$295</span>
+  281 |                 <button className="nc-add-btn">
+> 282 |                   <Plus size={18} />
+      |                    ^
+  283 |                 </button>
+  284 |               </div>
+  285 |             </div> {
+  digest: '1148974425'
+}
+✓ Compiled in 90ms
+ GET / 500 in 4.7s (compile: 3.7s, render: 1059ms)
+ GET / 200 in 1452ms (compile: 294ms, render: 1158ms)
+ GET /images/products/outfits/out2.png 404 in 1783ms (compile: 1683ms, render: 100ms)
+⨯ The requested resource isn't a valid image for /images/products/outfits/out2.png received null
+✓ Compiled in 131ms
+✓ Compiled in 916ms
+ GET / 200 in 1700ms (compile: 1571ms, render: 129ms)
+✓ Compiled in 517ms
+✓ Compiled in 354ms
+ GET /lookbook 200 in 1247ms (compile: 395ms, render: 852ms)
+✓ Compiled in 102ms
+ GET / 200 in 179ms (compile: 18ms, render: 161ms)
+✓ Compiled in 282ms
+✓ Compiled in 328ms
+ GET / 200 in 2.5s (compile: 1427ms, render: 1036ms)
+✓ Compiled in 539ms
+✓ Compiled in 274ms
+ GET /lookbook 200 in 1181ms (compile: 406ms, render: 776ms)
+ GET / 200 in 344ms (compile: 45ms, render: 299ms)
+✓ Compiled in 158ms
+ GET /categories 200 in 659ms (compile: 214ms, render: 445ms)
+ GET /products/dresses 200 in 298ms (compile: 163ms, render: 134ms)
+ GET /product/dress-002 200 in 248ms (compile: 105ms, render: 142ms)
+ GET / 200 in 268ms (compile: 80ms, render: 188ms)
+✓ Compiled in 161ms
+ GET /categories 200 in 195ms (compile: 61ms, render: 134ms)
+ GET /products/tops 200 in 218ms (compile: 87ms, render: 131ms)
+ GET /product/top-003 200 in 134ms (compile: 47ms, render: 87ms)
+ GET /lookbook 200 in 231ms (compile: 72ms, render: 159ms)
+ GET /about 200 in 292ms (compile: 175ms, render: 117ms)
+ GET / 200 in 380ms (compile: 96ms, render: 284ms)
+✓ Compiled in 213ms
+ GET /categories 200 in 371ms (compile: 141ms, render: 231ms)
+✓ Compiled in 225ms
+ GET / 200 in 527ms (compile: 232ms, render: 295ms)
+ GET / 200 in 132ms (compile: 7ms, render: 125ms)
+ GET /categories 200 in 85ms (compile: 35ms, render: 49ms)
+ GET /products/tops 200 in 133ms (compile: 53ms, render: 80ms)
+ GET /product/top-002 200 in 83ms (compile: 33ms, render: 50ms)
+ GET /cart 200 in 205ms (compile: 124ms, render: 81ms)
+ GET /categories 200 in 96ms (compile: 30ms, render: 66ms)
+ GET / 200 in 859ms (compile: 243ms, render: 615ms)
+ GET /categories 200 in 254ms (compile: 162ms, render: 92ms)
+ GET / 200 in 667ms (compile: 83ms, render: 583ms)
+ GET /categories 200 in 96ms (compile: 31ms, render: 65ms)
+✓ Compiled in 255ms
+ GET / 200 in 997ms (compile: 404ms, render: 593ms)
+ GET /categories 200 in 203ms (compile: 37ms, render: 166ms)
+ GET /products/tops 200 in 262ms (compile: 109ms, render: 154ms)
+ GET /product/top-003 200 in 185ms (compile: 79ms, render: 106ms)
+ GET / 200 in 675ms (compile: 157ms, render: 519ms)
+ GET / 200 in 121ms (compile: 20ms, render: 101ms)
+ GET /categories 200 in 160ms (compile: 53ms, render: 106ms)
+ GET /about 200 in 159ms (compile: 32ms, render: 127ms)
+ GET /contact 200 in 256ms (compile: 173ms, render: 83ms)
+ GET /about 200 in 178ms (compile: 74ms, render: 104ms)
+ GET /categories 200 in 257ms (compile: 73ms, render: 184ms)
+ GET / 200 in 371ms (compile: 32ms, render: 339ms)
+ GET /categories 200 in 73ms (compile: 12ms, render: 61ms)
+ GET /about 200 in 122ms (compile: 20ms, render: 102ms)
+✓ Compiled in 542ms
+✓ Compiled in 2.5s
+ GET /about 200 in 5.0s (compile: 2.4s, render: 2.6s)
+ GET /about 200 in 1681ms (compile: 1641ms, render: 39ms)
+ GET /about 200 in 1756ms (compile: 62ms, render: 1694ms)
+ GET /about 200 in 70ms (compile: 11ms, render: 59ms)
+ GET /about 200 in 31ms (compile: 1732µs, render: 29ms)
+✓ Compiled in 624ms
+ GET /about 200 in 783ms (compile: 484ms, render: 300ms)
+ GET /products/bottoms 200 in 565ms (compile: 527ms, render: 39ms)
+ GET /product/bottom-002 200 in 314ms (compile: 270ms, render: 44ms)
+✓ Compiled in 79ms
+✓ Compiled in 1168ms
+✓ Compiled in 271ms
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /product/bottom-002 200 in 2.4s (compile: 1617ms, render: 799ms)
+ GET /cart 200 in 6.5s (compile: 5.9s, render: 681ms)
+ GET /cart 200 in 96ms (compile: 26ms, render: 70ms)
+ GET /categories 200 in 715ms (compile: 646ms, render: 68ms)
+ GET /products/tops 200 in 47ms (compile: 20ms, render: 27ms)
+ GET /product/top-003 200 in 45ms (compile: 18ms, render: 28ms)
+ GET /cart 200 in 57ms (compile: 27ms, render: 30ms)
+ GET / 200 in 1841ms (compile: 1730ms, render: 111ms)
+ GET /about 200 in 185ms (compile: 96ms, render: 88ms)
+✓ Compiled in 296ms
+✓ Compiled in 263ms
+✓ Compiled in 114ms
+✓ Compiled in 128ms
+ GET /about 200 in 1311ms (compile: 166ms, render: 1145ms)
+ GET /lookbook 200 in 1519ms (compile: 1356ms, render: 163ms)
+ GET /contact 200 in 631ms (compile: 210ms, render: 421ms)
+ GET /cart 200 in 195ms (compile: 156ms, render: 39ms)
+ GET /categories 200 in 74ms (compile: 14ms, render: 60ms)
+ GET /products/tops 200 in 47ms (compile: 15ms, render: 32ms)
+ GET /product/top-003 200 in 53ms (compile: 10ms, render: 43ms)
+✓ Compiled in 20ms
+ GET /cart 200 in 419ms (compile: 106ms, render: 314ms)
+ GET /about 200 in 225ms (compile: 30ms, render: 195ms)
+ GET /categories 200 in 140ms (compile: 27ms, render: 113ms)
+ GET / 200 in 167ms (compile: 41ms, render: 126ms)
+ GET / 200 in 95ms (compile: 29ms, render: 65ms)
+ GET /categories 200 in 69ms (compile: 16ms, render: 53ms)
+ GET /products/tops 200 in 64ms (compile: 33ms, render: 31ms)
+ GET /product/top-002 200 in 70ms (compile: 23ms, render: 47ms)
+ GET /cart 200 in 572ms (compile: 14ms, render: 558ms)
+ GET /about 200 in 688ms (compile: 327ms, render: 361ms)
+ GET /categories 200 in 180ms (compile: 33ms, render: 147ms)
+ GET /products/tops 200 in 147ms (compile: 36ms, render: 111ms)
+ GET /product/top-003 200 in 73ms (compile: 17ms, render: 56ms)
+✓ Compiled in 600ms
+⚠ Fast Refresh had to perform a full reload when ./app/context/CartContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /product/top-003 200 in 2.1s (compile: 1510ms, render: 584ms)
+✓ Compiled in 67ms
+ GET /cart 200 in 2.1s (compile: 1823ms, render: 288ms)
+ GET /categories 200 in 296ms (compile: 206ms, render: 90ms)
+ GET /products/tops 200 in 214ms (compile: 192ms, render: 22ms)
+ GET /product/top-003 200 in 132ms (compile: 109ms, render: 22ms)
+✓ Compiled in 585ms
+ GET /categories 200 in 537ms (compile: 182ms, render: 355ms)
+ GET /products/tops 200 in 304ms (compile: 121ms, render: 182ms)
+ GET /product/top-003 200 in 1944ms (compile: 1748ms, render: 196ms)
+✓ Compiled in 151ms
+ GET / 200 in 1760ms (compile: 1543ms, render: 217ms)
+ GET /cart 200 in 94ms (compile: 39ms, render: 54ms)
+ GET / 200 in 54ms (compile: 14ms, render: 40ms)
+ GET /about 200 in 3.4s (compile: 3.2s, render: 192ms)
+✓ Compiled in 75ms
+ GET /categories 200 in 152ms (compile: 27ms, render: 125ms)
+ GET /products/tops 200 in 79ms (compile: 40ms, render: 38ms)
+ GET /product/top-003 200 in 75ms (compile: 27ms, render: 48ms)
+✓ Compiled in 869ms
+ GET /product/top-003 200 in 2.5s (compile: 2.4s, render: 132ms)
+ GET /product/top-003 200 in 80ms (compile: 15ms, render: 65ms)
+ GET /product/top-003 200 in 170ms (compile: 10ms, render: 160ms)
+ GET /product/top-003 200 in 95ms (compile: 5ms, render: 90ms)
+ GET /product/top-003 200 in 89ms (compile: 3ms, render: 86ms)
+ GET /product/top-003 200 in 131ms (compile: 6ms, render: 125ms)
+ GET /product/top-003 200 in 118ms (compile: 5ms, render: 113ms)
+ GET /product/top-003 200 in 87ms (compile: 5ms, render: 83ms)
+ GET /product/top-003 200 in 31ms (compile: 2ms, render: 29ms)
+ GET / 200 in 494ms (compile: 170ms, render: 324ms)
+ GET /categories 200 in 278ms (compile: 235ms, render: 43ms)
+ GET / 200 in 54ms (compile: 10ms, render: 44ms)
+✓ Compiled in 63ms
+✓ Compiled in 20ms
+✓ Compiled in 61ms
+✓ Compiled in 26ms
+ GET / 200 in 1452ms (compile: 109ms, render: 1343ms)
+✓ Compiled in 36ms
+✓ Compiled in 1686ms
+✓ Compiled in 0ms
+ GET / 200 in 3.7s (compile: 2.7s, render: 1044ms)
+ GET / 200 in 535ms (compile: 3ms, render: 533ms)
+ GET / 200 in 538ms (compile: 94ms, render: 444ms)
+✓ Compiled in 2.1s
+✓ Compiled in 120ms
+✓ Compiled in 648ms
+✓ Compiled in 183ms
+✓ Compiled in 290ms
+✓ Compiled in 115ms
+✓ Compiled in 313ms
+ GET / 200 in 3.6s (compile: 2.7s, render: 915ms)
+ GET / 200 in 431ms (compile: 113ms, render: 318ms)
+ GET / 200 in 215ms (compile: 8ms, render: 207ms)
+ GET / 200 in 167ms (compile: 9ms, render: 158ms)
+ GET / 200 in 129ms (compile: 13ms, render: 116ms)
+ GET / 200 in 120ms (compile: 13ms, render: 108ms)
+Persisting failed: Unable to write SST file 00001386.sst
+
+Caused by:
+    No such file or directory (os error 2)
+⨯ Error: ENOENT: no such file or directory, open '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/app/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/app/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+}
+Error: ENOENT: no such file or directory, open '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/app/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/app/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+}
+Error: ENOENT: no such file or directory, open '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+}
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+⨯ Error: ENOENT: no such file or directory, open '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/app/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/app/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+}
+Error: ENOENT: no such file or directory, open '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/app/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/app/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+}
+Error: ENOENT: no such file or directory, open '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/saikiranchiluveru/Desktop/rachana website/my-app/.next/dev/server/pages/_app/build-manifest.json'
+}
