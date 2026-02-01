@@ -4,7 +4,7 @@ import { useRef, useState, use } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ShoppingCart, MessageCircle, Heart, Plus, Minus } from 'lucide-react';
-import { getProductById } from '../../data/products';
+import { getProductById, getProductsByCategory } from '../../data/products';
 import { useCart } from '../../context/CartContext';
 import './product.css';
 
@@ -201,6 +201,38 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                 <p>Free shipping on orders above ₹2,999. Easy returns within 7 days.</p>
                             </details>
                         </div>
+                    </div>
+                </div>
+
+                {/* Similar Products Section */}
+                <div className="similar-products-section">
+                    <h2 className="similar-products-title">
+                        You Might Also Like
+                    </h2>
+                    <div className="similar-products-grid">
+                        {getProductsByCategory(product.category)
+                            .filter(p => p.id !== product.id)
+                            .slice(0, 3)
+                            .map(similarProduct => (
+                                <Link href={`/product/${similarProduct.id}`} key={similarProduct.id} className="similar-product-card">
+                                    <div className="similar-product-image-wrapper">
+                                        <Image
+                                            src={similarProduct.images[0]}
+                                            alt={similarProduct.name}
+                                            fill
+                                            style={{ objectFit: 'cover' }}
+                                        />
+                                    </div>
+                                    <div className="similar-product-info">
+                                        <h3 className="similar-product-name">
+                                            {similarProduct.name}
+                                        </h3>
+                                        <p className="similar-product-price">
+                                            ₹{similarProduct.price.toLocaleString('en-IN')}
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
                     </div>
                 </div>
             </div>
