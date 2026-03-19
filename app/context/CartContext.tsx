@@ -23,6 +23,7 @@ type CartContextType = {
     addToCart: (item: Omit<CartItem, 'quantity'>, startRect?: DOMRect) => void;
     updateQuantity: (id: string, size: string, delta: number) => void;
     removeFromCart: (id: string, size: string) => void;
+    clearCart: () => void;
     showModal: (message: string, type?: 'ALERT' | 'SUCCESS') => void;
     closeModal: () => void;
     cartCount: number;
@@ -135,6 +136,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setCart(prev => prev.filter(item => !(item.id === id && item.size === size)));
     };
 
+    const clearCart = () => setCart([]);
+
     const showModal = (message: string, type: 'ALERT' | 'SUCCESS' = 'ALERT') => {
         setModalState({ isOpen: true, type, message });
     };
@@ -146,7 +149,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, updateQuantity, removeFromCart, showModal, closeModal, cartCount, modalState }}>
+        <CartContext.Provider value={{ cart, addToCart, updateQuantity, removeFromCart, clearCart, showModal, closeModal, cartCount, modalState }}>
             {children}
             {/* Global Modal */}
             <GlobalCartModal state={modalState} cart={cart} onClose={closeModal} onUpdateQty={updateQuantity} />

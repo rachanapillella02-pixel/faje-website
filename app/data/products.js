@@ -37,7 +37,7 @@ export const products = [
         id: 'dress-001',
         name: 'Silk Midi Dress',
         category: 'dresses',
-        price: 12999,
+        price: 5,
         images: [
             '/images/products/dress/dress-wine-1.png',
             '/images/products/dress/dress-beige-1.png'
@@ -51,7 +51,7 @@ export const products = [
         id: 'dress-002',
         name: 'Linen Maxi Dress',
         category: 'dresses',
-        price: 10999,
+        price: 4,
         images: [
             '/images/products/dress/dress-beige-1.png',
             '/images/products/dress/dress-wine-1.png'
@@ -65,7 +65,7 @@ export const products = [
         id: 'dress-003',
         name: 'Wrap Dress',
         category: 'dresses',
-        price: 11499,
+        price: 5,
         images: [
             '/images/products/dress/dress-001-1.png',
             '/images/products/dress/dress-002-1.png'
@@ -81,7 +81,7 @@ export const products = [
         id: 'top-001',
         name: 'Silk Blouse',
         category: 'tops',
-        price: 7999,
+        price: 3,
         images: [
             '/images/products/tops/top-silk-1.png',
             '/images/products/tops/top-001-1.png'
@@ -95,7 +95,7 @@ export const products = [
         id: 'top-002',
         name: 'Oversized Shirt',
         category: 'tops',
-        price: 6999,
+        price: 2,
         images: [
             '/images/products/tops/top1.png',
             '/images/products/tops/top2.png'
@@ -109,7 +109,7 @@ export const products = [
         id: 'top-003',
         name: 'Puff Sleeve Top',
         category: 'tops',
-        price: 8499,
+        price: 3,
         images: [
             '/images/products/tops/top3.png',
             '/images/products/tops/top5.png'
@@ -123,7 +123,7 @@ export const products = [
         id: 'top-004',
         name: 'Classic Blouse',
         category: 'tops',
-        price: 7499,
+        price: 2,
         images: [
             '/images/products/tops/top6.png',
             '/images/products/tops/op4.png'
@@ -139,7 +139,7 @@ export const products = [
         id: 'bottom-001',
         name: 'Tailored Trousers',
         category: 'bottoms',
-        price: 9999,
+        price: 4,
         images: [
             '/images/products/bottoms/bot1.png',
             '/images/products/bottoms/bot2.png'
@@ -153,7 +153,7 @@ export const products = [
         id: 'bottom-002',
         name: 'Wide Leg Pants',
         category: 'bottoms',
-        price: 10499,
+        price: 4,
         images: [
             '/images/products/bottoms/bot3.png',
             '/images/products/bottoms/bot5.png'
@@ -167,7 +167,7 @@ export const products = [
         id: 'bottom-003',
         name: 'Pleated Skirt',
         category: 'bottoms',
-        price: 8999,
+        price: 3,
         images: [
             '/images/products/bottoms/bot6.png',
             '/images/products/bottoms/bot.png'
@@ -183,7 +183,7 @@ export const products = [
         id: 'outfit-001',
         name: 'Power Suit Set',
         category: 'outfits',
-        price: 24999,
+        price: 5,
         images: [
             '/images/categories/outfits.png',
             '/images/categories/outfits.png'
@@ -197,7 +197,7 @@ export const products = [
         id: 'outfit-002',
         name: 'Linen Co-ord Set',
         category: 'outfits',
-        price: 18999,
+        price: 4,
         images: [
             '/images/categories/bottoms.png',
             '/images/categories/tops.png'
@@ -211,7 +211,7 @@ export const products = [
         id: 'outfit-003',
         name: 'Silk Coord Set',
         category: 'outfits',
-        price: 21999,
+        price: 5,
         images: [
             '/images/products/tops/top-silk-1.png',
             '/images/categories/bottoms.png'

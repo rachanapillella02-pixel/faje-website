@@ -202,6 +202,259 @@
     text-decoration: underline;
 }
 
+/* ── UPI Pay Button ─────────────────────────── */
+.btn-upi-pay {
+    width: 100%;
+    margin-top: 2rem;
+    background: var(--color-wine);
+    color: white;
+    border: 2px solid var(--color-wine);
+    border-radius: 0;
+    padding: 1rem 2rem;
+    font-size: 0.85rem;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: var(--transition-smooth);
+}
+
+.btn-upi-pay:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(90, 35, 41, 0.3);
+}
+
+/* ── UPI Modal ──────────────────────────────── */
+.upi-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.6);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+    animation: fadeInModal 0.25s ease;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.upi-modal {
+    background: #FDFDF8;
+    border-radius: 0;
+    padding: 36px 32px 28px;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    animation: slideUpModal 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 20px 60px rgba(26, 26, 26, 0.25);
+    border-top: 3px solid var(--color-wine);
+}
+
+@keyframes slideUpModal {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.upi-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 30px;
+    height: 30px;
+    border-radius: 0;
+    border: 1px solid var(--color-light-gray);
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gray);
+    transition: var(--transition-fast);
+    z-index: 10;
+}
+
+.upi-modal-close:hover {
+    background: var(--color-wine);
+    color: white;
+    border-color: var(--color-wine);
+}
+
+.upi-modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-light-gray);
+}
+
+.upi-badge {
+    display: inline-block;
+    background: transparent;
+    color: var(--color-wine);
+    border: 1px solid var(--color-wine);
+    border-radius: 0;
+    padding: 3px 12px;
+    font-size: 10px;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.upi-amount {
+    font-family: var(--font-serif);
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--color-wine);
+    letter-spacing: 0.01em;
+    margin: 8px 0;
+}
+
+.upi-to {
+    font-size: 12px;
+    font-family: var(--font-sans);
+    color: var(--color-gray);
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.upi-qr-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0;
+    padding: 14px;
+    background: white;
+    border: 1px solid var(--color-light-gray);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.upi-apps-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.upi-app-tag {
+    background: var(--color-cream);
+    color: var(--color-gray);
+    border: 1px solid var(--color-light-gray);
+    border-radius: 0;
+    padding: 3px 10px;
+    font-size: 10px;
+    font-family: var(--font-sans);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.btn-upi-app {
+    width: 100%;
+    background: white;
+    color: var(--color-wine);
+    border: 2px solid var(--color-wine);
+    border-radius: 0;
+    padding: 0.9rem 1rem;
+    font-size: 0.8rem;
+    font-family: var(--font-sans);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: var(--transition-smooth);
+}
+
+.btn-upi-app:hover {
+    background: var(--color-wine);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-paid {
+    width: 100%;
+    background: var(--color-wine);
+    color: white;
+    border: 2px solid var(--color-wine);
+    border-radius: 0;
+    padding: 0.9rem 1rem;
+    font-size: 0.8rem;
+    font-family: var(--font-sans);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btn-paid:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(90, 35, 41, 0.3);
+}
+
+.upi-drop-zone {
+    display: block;
+    border: 2px dashed var(--color-light-gray);
+    border-radius: 0;
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    background: var(--color-cream);
+    transition: all 0.2s;
+    margin: 16px 0;
+}
+
+.upi-drop-zone.drag-over {
+    border-color: var(--color-wine);
+    background: #faf5f5;
+}
+
+/* Form Styles for Checkout Details */
+.checkout-form {
+    text-align: left;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-light-gray);
+}
+
+.checkout-form label {
+    display: block;
+    font-size: 13px;
+    color: var(--color-gray);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.checkout-form .form-input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    border: 1px solid var(--color-light-gray);
+    border-radius: 0;
+    font-size: 14px;
+    font-family: var(--font-sans);
+    transition: var(--transition-fast);
+}
+
+.checkout-form .form-input:focus {
+    outline: none;
+    border-color: var(--color-wine);
+    box-shadow: 0 0 0 1px rgba(90, 35, 41, 0.1);
+}
+
+.checkout-form textarea.form-input {
+    min-height: 80px;
+    resize: vertical;
+}
+
 /* Mobile Responsive */
 @media (max-width: 968px) {
     .cart-content {

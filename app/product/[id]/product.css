@@ -226,16 +226,7 @@
     background: #28a745;
 }
 
-.action-btn.whatsapp {
-    background: white;
-    color: var(--color-wine);
-    border: 2px solid var(--color-wine);
-}
 
-.action-btn.whatsapp:hover {
-    background: var(--color-wine);
-    color: white;
-}
 
 .view-cart-link {
     display: block;

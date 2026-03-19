@@ -3,7 +3,7 @@
 import { useRef, useState, use } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShoppingCart, MessageCircle, Heart, Plus, Minus } from 'lucide-react';
+import { ShoppingCart, Heart, Plus, Minus } from 'lucide-react';
 import { getProductById, getProductsByCategory } from '../../data/products';
 import { useCart } from '../../context/CartContext';
 import './product.css';
@@ -44,17 +44,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             size: selectedSize,
             image: product.images[0]
         }, addToCartBtnRef.current?.getBoundingClientRect());
-    };
-
-    const handleWhatsAppPurchase = () => {
-        if (!selectedSize) {
-            showModal('Please select a size', 'ALERT');
-            return;
-        }
-
-        const message = `Hi, I'm interested in buying the FAJE ${product.name} (Size: ${selectedSize}) - ₹${product.price.toLocaleString('en-IN')}`;
-        const whatsappUrl = `https://wa.me/919000848356?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
     };
 
     return (
@@ -176,14 +165,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                     Add to Cart
                                 </button>
                             )}
-
-                            <button
-                                className="action-btn whatsapp"
-                                onClick={handleWhatsAppPurchase}
-                            >
-                                <MessageCircle size={18} />
-                                Buy via WhatsApp
-                            </button>
                         </div>
 
                         <Link href="/cart" className="view-cart-link">
