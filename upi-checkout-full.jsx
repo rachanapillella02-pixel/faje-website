@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const PRODUCTS = [
   { id: 1, name: "Wireless Headphones", desc: "Premium noise-cancellation", price: 1299, emoji: "🎧" },
@@ -34,13 +34,16 @@ function UPIQRCode({ size = 160, amount, orderId }) {
   const upiString = `upi://pay?pa=${UPI_PA}&pn=${encodeURIComponent(UPI_NAME_STORE)}&am=${amount}&cu=INR&tn=${encodeURIComponent(orderId)}`;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(upiString)}&color=111111&bgcolor=ffffff&margin=6`;
   return (
-    <img
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
       src={qrUrl}
       width={size}
       height={size}
       alt="UPI QR Code"
       style={{ display: 'block', borderRadius: 6 }}
     />
+    </>
   );
 }
 
@@ -48,7 +51,7 @@ function UPIQRCode({ size = 160, amount, orderId }) {
 function ShopPage({ onCheckout }) {
   const [cart, setCart] = useState({});
   const add = id => setCart(p => ({ ...p, [id]: (p[id]||0)+1 }));
-  const rem = id => setCart(p => { const n={...p}; n[id]>1?n[id]--:delete n[id]; return n; });
+  const rem = id => setCart(p => { const n={...p}; if(n[id]>1){n[id]--;}else{delete n[id];} return n; });
   const count = Object.values(cart).reduce((a,b)=>a+b,0);
   const subtotal = Object.entries(cart).reduce((s,[id,q])=>s+(PRODUCTS.find(p=>p.id===+id)?.price||0)*q,0);
   const total = subtotal + DELIVERY + Math.round(subtotal*TAX_RATE);
@@ -341,6 +344,7 @@ function ProofPage({ orderId, total, onSubmit, onBack }) {
           <p style={{fontSize:10,fontWeight:800,color:"#ccc",letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:12}}>Payment Screenshot</p>
           {preview?(
             <div style={{position:"relative"}}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={preview} alt="preview" style={{width:"100%",borderRadius:10,maxHeight:160,objectFit:"cover"}}/>
               <button onClick={()=>{setFile(null);setPreview(null);}} style={{position:"absolute",top:7,right:7,width:26,height:26,borderRadius:"50%",background:"rgba(0,0,0,0.55)",color:"white",border:"none",cursor:"pointer",fontSize:14,display:"flex",alignItems:"center",justifyContent:"center"}}>×</button>
               <p style={{fontSize:12,color:"#00b894",marginTop:7,fontWeight:600}}>✓ Screenshot attached</p>

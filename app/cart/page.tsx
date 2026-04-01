@@ -3,24 +3,52 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Trash2, Plus, Minus, ShoppingBag, X, Upload } from 'lucide-react';
+import { Trash2, Plus, Minus, ShoppingBag, Upload } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './cart.css';
 
 const UPI_NUMBER = process.env.NEXT_PUBLIC_UPI_ID || '9618848356';
 const UPI_NAME = 'FAJE';
+const DELIVERY_CHARGE = 99;
 
 export default function CartPage() {
     const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
     const [isLoaded, setIsLoaded] = useState(false);
     const [showQR, setShowQR] = useState(false);
-    const [payStep, setPayStep] = useState<'qr' | 'details' | 'upload' | 'done'>('details');
+    const [payStep, setPayStep] = useState<'qr' | 'contact' | 'address' | 'upload' | 'done'>('contact');
     const [screenshot, setScreenshot] = useState<File | null>(null);
     const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
     const [dragOver, setDragOver] = useState(false);
     const [qrLoaded, setQrLoaded] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [customer, setCustomer] = useState({ name: '', email: '', phone: '', address: '' });
+    const [customer, setCustomer] = useState({ name: '', email: '', phone: '', houseNo: '', street: '', landmark: '', city: '', state: '', pincode: '' });
+    const [couponCode, setCouponCode] = useState('');
+    const [couponApplied, setCouponApplied] = useState(false);
+    const [couponError, setCouponError] = useState('');
+
+    const VALID_COUPONS: Record<string, { discount: number; label: string }> = {
+        'FAJE10': { discount: 0.10, label: '10% off on Slots, Campaigns & Influencer Marketing' },
+        'LAUNCH20': { discount: 0.20, label: '20% off on first order' },
+    };
+
+    const handleApplyCoupon = () => {
+        const code = couponCode.trim().toUpperCase();
+        if (VALID_COUPONS[code]) {
+            setCouponApplied(true);
+            setCouponError('');
+        } else {
+            setCouponApplied(false);
+            setCouponError('Invalid coupon code. Please try again.');
+        }
+    };
+
+    const getCouponDiscount = () => {
+        const code = couponCode.trim().toUpperCase();
+        if (couponApplied && VALID_COUPONS[code]) {
+            return Math.round(total * VALID_COUPONS[code].discount);
+        }
+        return 0;
+    };
 
     useEffect(() => {
         setIsLoaded(true);
@@ -31,9 +59,10 @@ export default function CartPage() {
     };
 
     const total = getTotalPrice();
+    const grandTotal = total + DELIVERY_CHARGE - getCouponDiscount();
 
     // Build UPI deeplink and QR
-    const upiString = `upi://pay?pa=${UPI_NUMBER}@ybl&pn=${encodeURIComponent(UPI_NAME)}&am=${total}&cu=INR&tn=${encodeURIComponent('FAJE Order')}`;
+    const upiString = `upi://pay?pa=${UPI_NUMBER}@ybl&pn=${encodeURIComponent(UPI_NAME)}&am=${grandTotal}&cu=INR&tn=${encodeURIComponent('FAJE Order')}`;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiString)}&color=5a2329&bgcolor=ffffff&margin=8`;
 
     const handleFile = (f: File | null) => {
@@ -47,13 +76,18 @@ export default function CartPage() {
     const handleSubmitScreenshot = async () => {
         if (!screenshot) return;
         setIsSubmitting(true);
+        const fullAddress = `${customer.houseNo}, ${customer.street}${customer.landmark ? ', ' + customer.landmark : ''}, ${customer.city}, ${customer.state} - ${customer.pincode}`;
         try {
             const formData = new FormData();
             formData.append('screenshot', screenshot);
             formData.append('orderData', JSON.stringify({
-                total,
+                subtotal: total,
+                deliveryCharge: DELIVERY_CHARGE,
+                couponDiscount: getCouponDiscount(),
+                couponCode: couponApplied ? couponCode.trim().toUpperCase() : '',
+                total: grandTotal,
                 items: cart.map(item => ({ name: item.name, size: item.size, quantity: item.quantity, price: item.price })),
-                customer
+                customer: { ...customer, address: fullAddress }
             }));
 
             const res = await fetch('/api/checkout', {
@@ -82,10 +116,13 @@ export default function CartPage() {
     const handleCloseModal = () => {
         setShowQR(false);
         setTimeout(() => {
-            setPayStep('details');
+            setPayStep('contact');
             setScreenshot(null);
             setScreenshotPreview(null);
-            setCustomer({ name: '', email: '', phone: '', address: '' });
+            setCouponCode('');
+            setCouponApplied(false);
+            setCouponError('');
+            setCustomer({ name: '', email: '', phone: '', houseNo: '', street: '', landmark: '', city: '', state: '', pincode: '' });
         }, 300);
     };
 
@@ -174,17 +211,22 @@ export default function CartPage() {
                                 <span>₹{total.toLocaleString('en-IN')}</span>
                             </div>
 
+                            <div className="summary-row">
+                                <span>Delivery Charges</span>
+                                <span>₹{(99).toLocaleString('en-IN')}</span>
+                            </div>
+
                             <div className="summary-row total">
                                 <span>Total</span>
-                                <span>₹{total.toLocaleString('en-IN')}</span>
+                                <span>₹{(total + 99).toLocaleString('en-IN')}</span>
                             </div>
 
                             {/* UPI Pay Button */}
                             <button
                                 className="btn btn-upi-pay"
-                                onClick={() => { setShowQR(true); setPayStep('details'); setScreenshot(null); setScreenshotPreview(null); setQrLoaded(false); }}
+                                onClick={() => { setShowQR(true); setPayStep('contact'); setScreenshot(null); setScreenshotPreview(null); setQrLoaded(false); }}
                             >
-                                Pay ₹{total.toLocaleString('en-IN')} via UPI
+                                Pay ₹{(total + 99).toLocaleString('en-IN')} via UPI
                             </button>
 
                             <Link href="/categories" className="continue-shopping">
@@ -201,7 +243,7 @@ export default function CartPage() {
                     <div className="upi-modal" onClick={e => e.stopPropagation()}>
 
                         {/* Close */}
-                        <button 
+                        <button
                             onClick={handleCloseModal}
                             style={{ position: 'absolute', top: 12, right: 12, background: 'none', border: 'none', fontSize: 24, cursor: 'pointer', zIndex: 50, color: '#000', padding: '8px' }}
                             aria-label="Close modal"
@@ -212,8 +254,8 @@ export default function CartPage() {
                         {payStep === 'qr' && (
                             <>
                                 <div className="upi-modal-header">
-                                    <div className="upi-badge">Step 2 of 3: UPI Payment</div>
-                                    <p className="upi-amount">₹{total.toLocaleString('en-IN')}</p>
+                                    <div className="upi-badge">Step 3 of 4: UPI Payment</div>
+                                    <p className="upi-amount">₹{grandTotal.toLocaleString('en-IN')}</p>
                                     <p className="upi-to">Pay to <strong>{UPI_NAME}</strong></p>
                                 </div>
 
@@ -227,6 +269,7 @@ export default function CartPage() {
                                         </div>
                                     )}
                                     {/* Real dynamic QR generated from amount */}
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={qrUrl}
                                         alt="UPI QR Code"
@@ -251,35 +294,34 @@ export default function CartPage() {
                                     ✓ I Have Paid — Proceed to Upload
                                 </button>
 
-                                <button className="btn btn-upi-app" onClick={() => setPayStep('details')} style={{ marginTop: 8 }}>
+                                <button className="btn btn-upi-app" onClick={() => setPayStep('address')} style={{ marginTop: 8 }}>
                                     ← Back to Details
                                 </button>
                             </>
                         )}
 
-                        {payStep === 'details' && (
+                        {payStep === 'contact' && (
                             <>
                                 <div className="upi-modal-header">
-                                    <div className="upi-badge" style={{ background: '#d1fae5', color: '#065f46' }}>Step 1 of 3</div>
-                                    <h3 style={{ marginTop: 10, fontSize: 18, fontWeight: 700 }}>Delivery Details</h3>
+                                    <div className="upi-badge" style={{ background: '#d1fae5', color: '#065f46' }}>Step 1 of 4</div>
+                                    <h3 style={{ marginTop: 10, fontSize: 18, fontWeight: 700 }}>Contact Information</h3>
                                     <p style={{ fontSize: 13, color: '#888', marginTop: 4 }}>
-                                        Please provide your shipping information
+                                        Please provide your contact details
                                     </p>
                                 </div>
 
                                 <div className="checkout-form" style={{ marginTop: 0, paddingTop: 10, borderTop: 'none' }}>
-                                    <input type="text" placeholder="Full Name *" value={customer.name} onChange={e => setCustomer({...customer, name: e.target.value})} className="form-input" required />
-                                    <input type="email" placeholder="Email Address *" value={customer.email} onChange={e => setCustomer({...customer, email: e.target.value})} className="form-input" required />
-                                    <input type="tel" placeholder="Phone Number *" value={customer.phone} onChange={e => setCustomer({...customer, phone: e.target.value})} className="form-input" required />
-                                    <textarea placeholder="Complete Delivery Address *" value={customer.address} onChange={e => setCustomer({...customer, address: e.target.value})} className="form-input" required />
-                                    
-                                    <button 
-                                        className="btn btn-paid" 
-                                        onClick={() => setPayStep('qr')} 
-                                        disabled={!customer.name || !customer.email || !customer.phone || !customer.address} 
-                                        style={{ marginTop: 12, opacity: (!customer.name || !customer.phone || !customer.address || !customer.email) ? 0.7 : 1 }}
-                                    >
-                                        Proceed to Payment →
+                                    <input type="text" placeholder="Full Name *" value={customer.name} onChange={e => setCustomer({ ...customer, name: e.target.value })} className="form-input" required />
+                                    <input type="email" placeholder="Email Address *" value={customer.email} onChange={e => setCustomer({ ...customer, email: e.target.value })} className="form-input" required />
+                                    <input type="tel" placeholder="Phone Number *" value={customer.phone} onChange={e => setCustomer({ ...customer, phone: e.target.value })} className="form-input" required />
+
+                                    <button
+                                        className="btn btn-paid"
+                                        onClick={() => setPayStep('address')}
+                                        disabled={!customer.name || !customer.email || !customer.phone}
+                                        style={{ marginTop: 12, opacity: (!customer.name || !customer.email || !customer.phone) ? 0.7 : 1 }}
+                                     >
+                                        Next: Delivery Address →
                                     </button>
                                 </div>
 
@@ -289,10 +331,78 @@ export default function CartPage() {
                             </>
                         )}
 
+                        {payStep === 'address' && (
+                            <>
+                                <div className="upi-modal-header">
+                                    <div className="upi-badge" style={{ background: '#d1fae5', color: '#065f46' }}>Step 2 of 4</div>
+                                    <h3 style={{ marginTop: 10, fontSize: 18, fontWeight: 700 }}>Delivery Details</h3>
+                                    <p style={{ fontSize: 13, color: '#888', marginTop: 4 }}>
+                                        Where should we send your order?
+                                    </p>
+                                </div>
+
+                                <div className="checkout-form" style={{ marginTop: 0, paddingTop: 10, borderTop: 'none' }}>
+                                    <input type="text" placeholder="House / Flat Number *" value={customer.houseNo} onChange={e => setCustomer({ ...customer, houseNo: e.target.value })} className="form-input" required />
+                                    <input type="text" placeholder="Street / Area *" value={customer.street} onChange={e => setCustomer({ ...customer, street: e.target.value })} className="form-input" required />
+                                    <input type="text" placeholder="Landmark (Optional)" value={customer.landmark} onChange={e => setCustomer({ ...customer, landmark: e.target.value })} className="form-input" />
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                                        <input type="text" placeholder="City *" value={customer.city} onChange={e => setCustomer({ ...customer, city: e.target.value })} className="form-input" required />
+                                        <input type="text" placeholder="State *" value={customer.state} onChange={e => setCustomer({ ...customer, state: e.target.value })} className="form-input" required />
+                                    </div>
+                                    <input type="text" placeholder="Pincode *" value={customer.pincode} onChange={e => setCustomer({ ...customer, pincode: e.target.value })} className="form-input" required maxLength={6} />
+
+                                    {/* Coupon Code */}
+                                    <p style={{ fontSize: 12, fontWeight: 600, color: '#5a2329', marginTop: 14, marginBottom: 4, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Coupon Code</p>
+                                    <div style={{ display: 'flex', gap: 8 }}>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter coupon code"
+                                            value={couponCode}
+                                            onChange={e => { setCouponCode(e.target.value); setCouponApplied(false); setCouponError(''); }}
+                                            className="form-input"
+                                            style={{ flex: 1, marginBottom: 0 }}
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={handleApplyCoupon}
+                                            style={{ padding: '0 16px', background: '#5a2329', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 13, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                                        >Apply</button>
+                                    </div>
+                                    {couponApplied && (
+                                        <p style={{ fontSize: 12, color: '#059669', marginTop: 4, fontWeight: 600 }}>✓ {VALID_COUPONS[couponCode.trim().toUpperCase()]?.label}</p>
+                                    )}
+                                    {couponError && (
+                                        <p style={{ fontSize: 12, color: '#e53e3e', marginTop: 4 }}>{couponError}</p>
+                                    )}
+
+                                    {/* Concise Order Total */}
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fdf6f6', borderRadius: 8, padding: '12px 14px', marginTop: 14 }}>
+                                        <span style={{ fontWeight: 600, color: '#5a2329', fontSize: 14 }}>Amount Payable</span>
+                                        <span style={{ fontWeight: 700, fontSize: 16, color: '#5a2329' }}>
+                                            ₹{(total + DELIVERY_CHARGE - getCouponDiscount()).toLocaleString('en-IN')}
+                                        </span>
+                                    </div>
+
+                                    <button
+                                        className="btn btn-paid"
+                                        onClick={() => setPayStep('qr')}
+                                        disabled={!customer.houseNo || !customer.street || !customer.city || !customer.state || !customer.pincode}
+                                        style={{ marginTop: 12, opacity: (!customer.houseNo || !customer.street || !customer.city || !customer.state || !customer.pincode) ? 0.7 : 1 }}
+                                    >
+                                        Proceed to Payment →
+                                    </button>
+                                </div>
+
+                                <button className="btn btn-upi-app" onClick={() => setPayStep('contact')} style={{ marginTop: 8 }}>
+                                    ← Back to Contact Info
+                                </button>
+                            </>
+                        )}
+
                         {payStep === 'upload' && (
                             <>
                                 <div className="upi-modal-header">
-                                    <div className="upi-badge" style={{ background: '#d1fae5', color: '#065f46' }}>Step 3 of 3</div>
+                                    <div className="upi-badge" style={{ background: '#d1fae5', color: '#065f46' }}>Step 4 of 4</div>
                                     <h3 style={{ marginTop: 10, fontSize: 18, fontWeight: 700 }}>Upload Payment Screenshot</h3>
                                     <p style={{ fontSize: 13, color: '#888', marginTop: 4 }}>
                                         Upload your ₹{total.toLocaleString('en-IN')} payment proof to confirm your order
@@ -301,6 +411,7 @@ export default function CartPage() {
 
                                 {screenshotPreview ? (
                                     <div style={{ position: 'relative', margin: '16px 0' }}>
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
                                         <img src={screenshotPreview} alt="payment screenshot" style={{ width: '100%', borderRadius: 12, maxHeight: 180, objectFit: 'cover' }} />
                                         <button onClick={() => { setScreenshot(null); setScreenshotPreview(null); }}
                                             style={{ position: 'absolute', top: 8, right: 8, width: 28, height: 28, borderRadius: '50%', background: 'rgba(0,0,0,0.55)', color: 'white', border: 'none', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
@@ -323,10 +434,10 @@ export default function CartPage() {
                                 )}
 
                                 {screenshotPreview && (
-                                    <button 
-                                        className="btn btn-paid" 
-                                        onClick={handleSubmitScreenshot} 
-                                        disabled={isSubmitting} 
+                                    <button
+                                        className="btn btn-paid"
+                                        onClick={handleSubmitScreenshot}
+                                        disabled={isSubmitting}
                                         style={{ marginTop: 12, opacity: isSubmitting ? 0.7 : 1 }}
                                     >
                                         {isSubmitting ? 'Processing Order...' : 'Complete Order'}

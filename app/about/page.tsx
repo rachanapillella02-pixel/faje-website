@@ -20,7 +20,7 @@ export default function AboutPage() {
                         <div className="story-content">
                             <h2>Our Story</h2>
                             <p>
-                                FAJE is more than just a fashion brand – it's a celebration of the modern woman.
+                                FAJE is more than just a fashion brand – it&apos;s a celebration of the modern woman.
                                 Born from a passion for creating pieces that empower, inspire, and elevate, we believe
                                 that fashion should be an expression of confidence and individuality.
                             </p>
@@ -77,7 +77,7 @@ export default function AboutPage() {
                         <div className="value-card">
                             <h3>Bold Expression</h3>
                             <p>
-                                Fashion is a form of self-expression. We create pieces for women who aren't
+                                Fashion is a form of self-expression. We create pieces for women who aren&apos;t
                                 afraid to make a statement and stand out from the crowd.
                             </p>
                         </div>

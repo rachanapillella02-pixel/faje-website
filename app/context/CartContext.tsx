@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode, useRef } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import Image from 'next/image';
 
 type CartItem = {
     id: string;
@@ -52,6 +53,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         try {
             const storedCart = localStorage.getItem('cart');
             if (storedCart) {
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setCart(JSON.parse(storedCart));
             }
         } catch (error) {
@@ -171,7 +173,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
                         zIndex: 9999,
                         animation: 'flyToCart 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
                         // Use CSS vars to pass dynamic coords
-                        // @ts-ignore
+                        // @ts-expect-error custom CSS properties
                         '--start-x': `${flyingItem.start.x}px`,
                         '--start-y': `${flyingItem.start.y}px`,
                         '--target-x': `${flyingItem.target.x}px`,
@@ -208,7 +210,7 @@ function GlobalCartModal({ state, cart, onClose, onUpdateQty }: { state: ModalSt
 
                         {currentItem && (
                             <div className="modal-item-preview">
-                                <img src={currentItem.image} alt={currentItem.name} />
+                                <Image src={currentItem.image} alt={currentItem.name} width={60} height={80} style={{ objectFit: 'cover' }} />
                                 <div className="modal-item-details">
                                     <h4>{currentItem.name}</h4>
                                     <p className="modal-item-meta">{currentItem.size} • ₹{currentItem.price.toLocaleString()}</p>

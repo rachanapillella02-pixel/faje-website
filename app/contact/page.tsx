@@ -1,4 +1,4 @@
-import { Instagram, MessageCircle, Mail } from 'lucide-react';
+import { Instagram, Mail } from 'lucide-react';
 import './contact.css';
 
 export default function ContactPage() {
@@ -8,7 +8,7 @@ export default function ContactPage() {
                 {/* Page Header */}
                 <div className="contact-header">
                     <h1>Get In Touch</h1>
-                    <p>We'd love to hear from you</p>
+                    <p>We&apos;d love to hear from you</p>
                 </div>
 
                 {/* Contact Grid */}
@@ -23,22 +23,7 @@ export default function ContactPage() {
 
                         <div className="contact-methods">
                             <a
-                                href="https://wa.me/919000848356"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="contact-method"
-                            >
-                                <div className="method-icon">
-                                    <MessageCircle size={32} />
-                                </div>
-                                <div className="method-details">
-                                    <h3>WhatsApp</h3>
-                                    <p>+91 98765 43210</p>
-                                </div>
-                            </a>
-
-                            <a
-                                href="https://instagram.com/faje.fashion"
+                                href="https://www.instagram.com/withfaje/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="contact-method"
@@ -48,12 +33,12 @@ export default function ContactPage() {
                                 </div>
                                 <div className="method-details">
                                     <h3>Instagram</h3>
-                                    <p>@faje.fashion</p>
+                                    <p>@withfaje</p>
                                 </div>
                             </a>
 
                             <a
-                                href="mailto:hello@faje.fashion"
+                                href="mailto:contact@faje.com"
                                 className="contact-method"
                             >
                                 <div className="method-icon">
@@ -61,7 +46,7 @@ export default function ContactPage() {
                                 </div>
                                 <div className="method-details">
                                     <h3>Email</h3>
-                                    <p>hello@faje.fashion</p>
+                                    <p>contact@faje.com</p>
                                 </div>
                             </a>
                         </div>

@@ -3,20 +3,66 @@
 import { useRef, useState, use } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShoppingCart, Heart, Plus, Minus } from 'lucide-react';
+import { Plus, Minus, Play } from 'lucide-react';
 import { getProductById, getProductsByCategory } from '../../data/products';
 import { useCart } from '../../context/CartContext';
 import './product.css';
 
+function ImageWithLoader({ src, alt }: { src: string; alt: string }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  return (
+    <>
+      {!isLoaded && (
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: '#f8f8f8', borderRadius: '4px'
+        }}>
+          <div style={{
+            width: '20px', height: '20px',
+            border: '2px solid #e0e0e0',
+            borderTopColor: '#5a2329',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite'
+          }} />
+          <style>{`
+            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+          `}</style>
+        </div>
+      )}
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        style={{ objectFit: 'cover', opacity: isLoaded ? 1 : 0, transition: 'opacity 0.3s' }}
+        onLoad={() => setIsLoaded(true)}
+      />
+    </>
+  );
+}
+
+interface Product {
+    id: string;
+    name: string;
+    category: string;
+    price: number;
+    images: string[];
+    video?: string;
+    sizes: string[];
+    fabric: string;
+    care: string;
+    description: string;
+}
+
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = use(params);
-    const product = getProductById(resolvedParams.id);
+    const product: Product | undefined = getProductById(resolvedParams.id);
     const [selectedSize, setSelectedSize] = useState('');
+    // currentImageIndex: 0...(images.length-1) = image; images.length = video
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const { addToCart, showModal, cart, updateQuantity } = useCart();
     const addToCartBtnRef = useRef<HTMLButtonElement>(null);
 
-    // Check if item is already in cart
     const cartItem = selectedSize ? cart.find(item => item.id === product?.id && item.size === selectedSize) : undefined;
     const quantityInCart = cartItem ? cartItem.quantity : 0;
 
@@ -31,12 +77,15 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         );
     }
 
+    const hasVideo = !!product.video;
+    const videoIndex = product.images.length; // virtual index for the video tile
+    const isShowingVideo = hasVideo && currentImageIndex === videoIndex;
+
     const handleAddToCart = () => {
         if (!selectedSize) {
             showModal('Please select a size', 'ALERT');
             return;
         }
-
         addToCart({
             id: product.id,
             name: product.name,
@@ -60,35 +109,125 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     </Link>
                 </div>
 
-                {/* Product Detail Grid */}
-                <div className="product-detail-container">
-                    {/* Left: Thumbnail Gallery */}
-                    <div className="thumbnail-column">
-                        {product.images.map((image, index) => (
+        {/* Product Detail Grid */}
+        <div className="product-detail-container">
+          {/* Left: Thumbnail Gallery */}
+          <div className="thumbnail-column">
+            {product.images.map((image, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`thumbnail-item ${currentImageIndex === index ? 'active' : ''}`}
+                  onClick={() => setCurrentImageIndex(index)}
+                  style={{ position: 'relative' }}
+                >
+                  <ImageWithLoader
+                    src={image}
+                    alt={`${product.name} ${index + 1}`}
+                  />
+                </div>
+              );
+            })}
+
+                        {/* Video thumbnail tile */}
+                        {hasVideo && (
                             <div
-                                key={index}
-                                className={`thumbnail-item ${currentImageIndex === index ? 'active' : ''}`}
-                                onClick={() => setCurrentImageIndex(index)}
+                                className={`thumbnail-item ${isShowingVideo ? 'active' : ''}`}
+                                onClick={() => setCurrentImageIndex(videoIndex)}
+                                style={{
+                                    background: '#111',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    position: 'relative'
+                                }}
                             >
-                                <Image
-                                    src={image}
-                                    alt={`${product.name} ${index + 1}`}
-                                    fill
-                                    style={{ objectFit: 'cover' }}
+                                {/* first frame preview */}
+                                <video
+                                    src={product.video}
+                                    muted
+                                    preload="metadata"
+                                    style={{
+                                        position: 'absolute', inset: 0,
+                                        width: '100%', height: '100%',
+                                        objectFit: 'cover',
+                                        opacity: 0.5
+                                    }}
                                 />
+                                <div style={{
+                                    position: 'relative', zIndex: 2,
+                                    background: 'rgba(255,255,255,0.9)',
+                                    borderRadius: '50%',
+                                    width: 32, height: 32,
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                }}>
+                                    <Play size={16} fill="#5a2329" color="#5a2329" />
+                                </div>
                             </div>
-                        ))}
+                        )}
                     </div>
 
-                    {/* Center: Main Product Image */}
-                    <div className="main-product-image">
-                        <Image
-                            src={product.images[currentImageIndex]}
-                            alt={product.name}
-                            fill
-                            style={{ objectFit: 'cover' }}
-                            priority
-                        />
+                    {/* Center: Main Display (Image or Video) */}
+                    <div className="main-product-image" style={{ position: 'relative' }}>
+                        {isShowingVideo ? (
+                            <video
+                                key="product-video"
+                                src={product.video}
+                                controls
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    position: 'absolute',
+                                    top: 0, left: 0
+                                }}
+                            />
+                        ) : (
+                            <Image
+                                src={product.images[currentImageIndex]}
+                                alt={product.name}
+                                fill
+                                style={{ objectFit: 'cover' }}
+                                priority
+                            />
+                        )}
+
+                        {/* Navigation Arrows */}
+                        {currentImageIndex > 0 && (
+                            <button
+                                onClick={() => setCurrentImageIndex(i => i - 1)}
+                                style={{
+                                    position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)',
+                                    background: 'rgba(255,255,255,0.8)', border: 'none', borderRadius: '50%',
+                                    width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    cursor: 'pointer', zIndex: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                    color: '#5a2329', fontSize: 20, fontWeight: 'bold'
+                                }}
+                                aria-label="Previous image"
+                            >
+                                &#10094;
+                            </button>
+                        )}
+                        {currentImageIndex < (hasVideo ? product.images.length : product.images.length - 1) && (
+                            <button
+                                onClick={() => setCurrentImageIndex(i => i + 1)}
+                                style={{
+                                    position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
+                                    background: 'rgba(255,255,255,0.8)', border: 'none', borderRadius: '50%',
+                                    width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    cursor: 'pointer', zIndex: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                    color: '#5a2329', fontSize: 20, fontWeight: 'bold'
+                                }}
+                                aria-label="Next image"
+                            >
+                                &#10095;
+                            </button>
+                        )}
                     </div>
 
                     {/* Right: Product Info */}

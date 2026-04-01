@@ -1,7 +1,77 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Plus } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { useState, useRef } from 'react';
 import './page.css';
+
+function HoverVideoCard({ href, imageSrc, videoSrc, title, price }: { href: string; imageSrc: string; videoSrc: string; title: string; price: string }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (videoRef.current) {
+      videoRef.current.play().catch(e => console.log('Video auto-play prevented:', e));
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
+
+  return (
+    <Link 
+      href={href} 
+      className="nc-card" 
+      style={{ textDecoration: 'none', color: 'inherit' }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <span className="nc-category-tag">Outfits</span>
+      <div className="nc-image-wrapper" style={{ position: 'relative' }}>
+        <Image 
+          src={imageSrc} 
+          alt={title} 
+          fill 
+          style={{ 
+            objectFit: 'cover', 
+            objectPosition: 'top',
+            opacity: isHovered ? 0 : 1,
+            transition: 'opacity 0.3s ease'
+          }} 
+        />
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          muted
+          loop
+          playsInline
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: isHovered ? 1 : 0,
+            transition: 'opacity 0.3s ease'
+          }}
+        />
+      </div>
+      <h3 className="nc-product-title">{title}</h3>
+      <div className="nc-card-bottom">
+        <span className="nc-price">{price}</span>
+        <span className="nc-add-btn"><ArrowRight size={18} /></span>
+      </div>
+    </Link>
+  );
+}
 
 export default function Home() {
   return (
@@ -52,10 +122,10 @@ export default function Home() {
             </Link>
 
             {/* Medium Feature - Tops */}
-            <Link href="/products/tops" className="grid-item medium">
+            <div className="grid-item medium">
               <div className="grid-image">
                 <Image
-                  src="/images/categories/tops.png"
+                  src="/actual-files/outfit1/18-03-2026 vika6495.jpg"
                   alt="Tops Collection"
                   fill
                   style={{ objectFit: 'cover' }}
@@ -63,15 +133,14 @@ export default function Home() {
               </div>
               <div className="grid-content">
                 <h3>Sophisticated Tops</h3>
-                <span className="grid-link">Explore →</span>
               </div>
-            </Link>
+            </div>
 
             {/* Medium Feature - Bottoms */}
-            <Link href="/products/bottoms" className="grid-item medium">
+            <div className="grid-item medium">
               <div className="grid-image">
                 <Image
-                  src="/images/categories/bottoms.png"
+                  src="/actual-files/outfit3/18-03-2026 vika6542.jpg"
                   alt="Bottoms Collection"
                   fill
                   style={{ objectFit: 'cover' }}
@@ -79,9 +148,8 @@ export default function Home() {
               </div>
               <div className="grid-content">
                 <h3>Tailored Bottoms</h3>
-                <span className="grid-link">Explore →</span>
               </div>
-            </Link>
+            </div>
 
             {/* Small Feature - Text Block */}
             <div className="grid-item small text-block">
@@ -160,7 +228,7 @@ export default function Home() {
               <h4 className="product-card-title">Silk Midi Dress</h4>
               <div className="product-card-image">
                 <Image
-                  src="/images/products/dress/dress-beige-1.png"
+                  src="/actual-files/outfit2/18-03-2026 vika6513.jpg"
                   alt="Silk Midi Dress"
                   fill
                   style={{ objectFit: 'cover' }}
@@ -265,122 +333,32 @@ export default function Home() {
 
           <div className="nc-scroll-container">
 
-            {/* Dresses */}
-            <div className="nc-card">
-              <span className="nc-category-tag">Dresses</span>
-              <div className="nc-image-wrapper">
-                <Image src="/images/products/dress/dress-wine-1.png" alt="Velvet Evening Gown" fill style={{ objectFit: 'cover', objectPosition: 'top' }} />
-              </div>
-              <h3 className="nc-product-title">Velvet Evening Gown</h3>
-              <div className="nc-card-bottom">
-                <span className="nc-price">$295</span>
-                <button className="nc-add-btn"><Plus size={18} /></button>
-              </div>
-            </div>
+            {/* Outfit 1 */}
+            <HoverVideoCard
+                href="/product/outfit-001"
+                imageSrc="/actual-files/outfit1/1.jpg"
+                videoSrc="/actual-files/outfit1/1-compressed.mp4"
+                title="Outfit 1"
+                price="₹5"
+            />
 
-            <div className="nc-card">
-              <span className="nc-category-tag">Dresses</span>
-              <div className="nc-image-wrapper">
-                <Image src="/images/products/dress/dress-beige-1.png" alt="Silk Midi Dress" fill style={{ objectFit: 'cover', objectPosition: 'top' }} />
-              </div>
-              <h3 className="nc-product-title">Silk Midi Dress</h3>
-              <div className="nc-card-bottom">
-                <span className="nc-price">$245</span>
-                <button className="nc-add-btn"><Plus size={18} /></button>
-              </div>
-            </div>
+            {/* Outfit 2 */}
+            <HoverVideoCard
+                href="/product/outfit-002"
+                imageSrc="/actual-files/outfit2/18-03-2026 vika6511.jpg"
+                videoSrc="/actual-files/outfit2/2-compressed.mp4"
+                title="Outfit 2"
+                price="₹4"
+            />
 
-            <div className="nc-card">
-              <span className="nc-category-tag">Dresses</span>
-              <div className="nc-image-wrapper">
-                <Image src="/images/products/dress/dress-001-1.png" alt="Ethereal Gown" fill style={{ objectFit: 'cover', objectPosition: 'top' }} />
-              </div>
-              <h3 className="nc-product-title">Ethereal Gown</h3>
-              <div className="nc-card-bottom">
-                <span className="nc-price">$320</span>
-                <button className="nc-add-btn"><Plus size={18} /></button>
-              </div>
-            </div>
-
-            {/* Tops */}
-            <div className="nc-card">
-              <span className="nc-category-tag">Tops</span>
-              <div className="nc-image-wrapper">
-                <Image src="/images/products/tops/top-silk-1.png" alt="Silk Blouse" fill style={{ objectFit: 'cover', objectPosition: 'top' }} />
-              </div>
-              <h3 className="nc-product-title">Silk Blouse</h3>
-              <div className="nc-card-bottom">
-                <span className="nc-price">$180</span>
-                <button className="nc-add-btn"><Plus size={18} /></button>
-              </div>
-            </div>
-
-            <div className="nc-card">
-              <span className="nc-category-tag">Tops</span>
-              <div className="nc-image-wrapper">
-                <Image src="/images/products/tops/top-001-1.png" alt="Classic White Shirt" fill style={{ objectFit: 'cover', objectPosition: 'top' }} />
-              </div>
-              <h3 className="nc-product-title">Classic White Shirt</h3>
-              <div className="nc-card-bottom">
-                <span className="nc-price">$160</span>
-                <button className="nc-add-btn"><Plus size={18} /></button>
-              </div>
-            </div>
-
-            <div className="nc-card">
-              <span className="nc-category-tag">Tops</span>
-              <div className="nc-image-wrapper">
-                <Image src="/images/products/tops/top2.png" alt="Modern Tunic" fill style={{ objectFit: 'cover', objectPosition: 'top' }} />
-              </div>
-              <h3 className="nc-product-title">Modern Tunic</h3>
-              <div className="nc-card-bottom">
-                <span className="nc-price">$145</span>
-                <button className="nc-add-btn"><Plus size={18} /></button>
-              </div>
-            </div>
-
-            {/* Bottoms */}
-            <div className="nc-card">
-              <span className="nc-category-tag">Bottoms</span>
-              <div className="nc-image-wrapper">
-                <Image src="/images/products/bottoms/bot1.png" alt="Tailored Trousers" fill style={{ objectFit: 'cover', objectPosition: 'top' }} />
-              </div>
-              <h3 className="nc-product-title">Tailored Trousers</h3>
-              <div className="nc-card-bottom">
-                <span className="nc-price">$220</span>
-                <button className="nc-add-btn"><Plus size={18} /></button>
-              </div>
-            </div>
-
-            <div className="nc-card">
-              <span className="nc-category-tag">Bottoms</span>
-              <div className="nc-image-wrapper">
-                <Image src="/images/products/bottoms/bot2.png" alt="High Waist Skirt" fill style={{ objectFit: 'contain' }} />
-              </div>
-              <h3 className="nc-product-title">High Waist Skirt</h3>
-              <div className="nc-card-bottom">
-                <span className="nc-price">$195</span>
-                <button className="nc-add-btn"><Plus size={18} /></button>
-              </div>
-            </div>
-
-            <div className="nc-card">
-              <span className="nc-category-tag">Bottoms</span>
-              <div className="nc-image-wrapper">
-                <Image src="/images/products/bottoms/bot3.png" alt="Pleated Midi" fill style={{ objectFit: 'contain' }} />
-              </div>
-              <h3 className="nc-product-title">Pleated Midi</h3>
-              <div className="nc-card-bottom">
-                <span className="nc-price">$210</span>
-                <button className="nc-add-btn"><Plus size={18} /></button>
-              </div>
-            </div>
-
-            {/* See More Link */}
-            <Link href="/categories" className="nc-card see-more-card">
-              <span className="see-more-text">See More</span>
-              <ArrowRight size={24} />
-            </Link>
+            {/* Outfit 3 */}
+            <HoverVideoCard
+                href="/product/outfit-003"
+                imageSrc="/actual-files/outfit3/18-03-2026 vika6539.jpg"
+                videoSrc="/actual-files/outfit3/3-compressed.mp4"
+                title="Outfit 3"
+                price="₹5"
+            />
 
           </div>
         </div>

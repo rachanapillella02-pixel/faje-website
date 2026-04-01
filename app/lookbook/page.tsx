@@ -3,6 +3,9 @@ import './lookbook.css';
 
 export default function LookbookPage() {
     const lookbookImages = [
+        { id: 7, src: '/actual-files/outfit1/18-03-2026 vika6495.jpg', alt: 'New Outfit 1' },
+        { id: 8, src: '/actual-files/outfit2/18-03-2026 vika6513.jpg', alt: 'New Outfit 2' },
+        { id: 9, src: '/actual-files/outfit3/18-03-2026 vika6542.jpg', alt: 'New Outfit 3' },
         { id: 1, src: '/images/hero.png', alt: 'FAJE Collection 1' },
         { id: 2, src: '/images/categories/dresses.png', alt: 'FAJE Collection 2' },
         { id: 3, src: '/images/categories/co-ords.png', alt: 'FAJE Collection 3' },

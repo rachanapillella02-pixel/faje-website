@@ -28,7 +28,7 @@ export async function POST(request: Request) {
         });
 
         // Format order items for readability
-        const itemsList = orderData.items.map((item: any) => 
+        const itemsList = orderData.items.map((item: { quantity: number; name: string; size: string; price: number }) => 
             `- ${item.quantity}x ${item.name} (Size: ${item.size}) - ₹${item.price.toLocaleString('en-IN')}`
         ).join('\n');
 
@@ -36,14 +36,18 @@ export async function POST(request: Request) {
 Name: ${orderData.customer.name}
 Email: ${orderData.customer.email}
 Phone: ${orderData.customer.phone}
-Address: ${orderData.customer.address}
+Delivery Address: ${orderData.customer.address}
 ` : '';
+
+        const pricingText = `Subtotal: ₹${(orderData.subtotal || orderData.total).toLocaleString('en-IN')}
+Delivery Charge: ₹${(orderData.deliveryCharge || 99).toLocaleString('en-IN')}${orderData.couponCode ? `\nCoupon (${orderData.couponCode}): -₹${(orderData.couponDiscount || 0).toLocaleString('en-IN')}` : ''}
+Total Paid: ₹${orderData.total.toLocaleString('en-IN')}`;
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER, // Sending it to yourself
+            to: 'contact@faje.com',
             subject: `FAJE: New Order & Payment - ₹${orderData.total.toLocaleString('en-IN')}`,
-            text: `A new customer order and payment proof has been submitted.\n\n${customerText}\nTotal Paid: ₹${orderData.total.toLocaleString('en-IN')}\n\nOrder Items:\n${itemsList}\n\nPlease check the attached screenshot to verify the UPI payment.`,
+            text: `A new customer order and payment proof has been submitted.\n\n${customerText}\n${pricingText}\n\nOrder Items:\n${itemsList}\n\nPlease check the attached screenshot to verify the UPI payment.`,
             attachments: [
                 {
                     filename: screenshotFile.name || 'payment_proof.jpg',

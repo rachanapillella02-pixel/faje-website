@@ -21,7 +21,34 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: "FAJE - New Age Fashion",
   description: "Designed for the bold, feminine & confident. Premium luxury fashion for modern women.",
-  keywords: ["fashion", "luxury", "women's clothing", "dresses", "co-ord sets", "ethnic wear"],
+  keywords: ["fashion", "luxury", "women's clothing", "dresses", "co-ord sets", "ethnic wear", "FAJE"],
+  authors: [{ name: "FAJE Team" }],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    title: "FAJE - New Age Fashion",
+    description: "Premium luxury fashion for modern women. Designed for the bold, feminine & confident.",
+    siteName: "FAJE",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "FAJE Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FAJE - New Age Fashion",
+    description: "Premium luxury fashion for modern women.",
+    images: ["/logo.png"],
+  },
 };
 
 import { CartProvider } from "./context/CartContext";

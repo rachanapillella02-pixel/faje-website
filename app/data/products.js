@@ -1,26 +1,26 @@
 // Categories Data
 export const categories = [
-    {
-        id: 'dresses',
-        name: 'Dresses',
-        slug: 'dresses',
-        description: 'Elegant dresses for every occasion',
-        image: '/images/categories/dresses.png'
-    },
-    {
-        id: 'tops',
-        name: 'Tops',
-        slug: 'tops',
-        description: 'Sophisticated blouses and tops',
-        image: '/images/categories/tops.png'
-    },
-    {
-        id: 'bottoms',
-        name: 'Bottoms',
-        slug: 'bottoms',
-        description: 'Tailored trousers and skirts',
-        image: '/images/categories/bottoms.png'
-    },
+    // {
+    //     id: 'dresses',
+    //     name: 'Dresses',
+    //     slug: 'dresses',
+    //     description: 'Elegant dresses for every occasion',
+    //     image: '/images/categories/dresses.png'
+    // },
+    // {
+    //     id: 'tops',
+    //     name: 'Tops',
+    //     slug: 'tops',
+    //     description: 'Sophisticated blouses and tops',
+    //     image: '/images/categories/tops.png'
+    // },
+    // {
+    //     id: 'bottoms',
+    //     name: 'Bottoms',
+    //     slug: 'bottoms',
+    //     description: 'Tailored trousers and skirts',
+    //     image: '/images/categories/bottoms.png'
+    // },
     {
         id: 'outfits',
         name: 'Outfits',
@@ -181,45 +181,62 @@ export const products = [
     // OUTFITS
     {
         id: 'outfit-001',
-        name: 'Power Suit Set',
+        name: 'Outfit 1',
         category: 'outfits',
         price: 5,
         images: [
-            '/images/categories/outfits.png',
-            '/images/categories/outfits.png'
+            '/actual-files/outfit1/1.jpg',
+            '/actual-files/outfit1/18-03-2026 vika6479.jpg',
+            '/actual-files/outfit1/18-03-2026 vika6482.jpg',
+            '/actual-files/outfit1/18-03-2026 vika6484.jpg',
+            '/actual-files/outfit1/18-03-2026 vika6485.jpg',
+            '/actual-files/outfit1/18-03-2026 vika6488.jpg',
+            '/actual-files/outfit1/18-03-2026 vika6493.jpg',
+            '/actual-files/outfit1/18-03-2026 vika6495.jpg',
         ],
+        video: '/actual-files/outfit1/1.mp4',
         sizes: ['XS', 'S', 'M', 'L', 'XL'],
-        fabric: 'Wool Blend',
+        fabric: 'Premium Blend',
         care: 'Dry clean only',
-        description: 'Matching wine-colored blazer and trousers set. Impeccable tailoring for the modern professional.'
+        description: 'A stunning complete outfit set captured in our latest collection shoot. Effortlessly elegant and versatile for any occasion.'
     },
     {
         id: 'outfit-002',
-        name: 'Linen Co-ord Set',
+        name: 'Outfit 2',
         category: 'outfits',
         price: 4,
         images: [
-            '/images/categories/bottoms.png',
-            '/images/categories/tops.png'
+            '/actual-files/outfit2/18-03-2026 vika6511.jpg',
+            '/actual-files/outfit2/18-03-2026 vika6513.jpg',
+            '/actual-files/outfit2/18-03-2026 vika6518.jpg',
+            '/actual-files/outfit2/18-03-2026 vika6521.jpg',
+            '/actual-files/outfit2/18-03-2026 vika6528.jpg',
+            '/actual-files/outfit2/18-03-2026 vika6532.jpg',
         ],
+        video: '/actual-files/outfit2/2.mp4',
         sizes: ['XS', 'S', 'M', 'L', 'XL'],
         fabric: 'Premium Linen',
         care: 'Machine wash cold',
-        description: 'Matching linen blazer and shorts set. Perfect for summer sophistication.'
+        description: 'A beautifully crafted ensemble from the FAJE collection. Light, breathable fabric perfect for a polished everyday look.'
     },
     {
         id: 'outfit-003',
-        name: 'Silk Coord Set',
+        name: 'Outfit 3',
         category: 'outfits',
         price: 5,
         images: [
-            '/images/products/tops/top-silk-1.png',
-            '/images/categories/bottoms.png'
+            '/actual-files/outfit3/18-03-2026 vika6539.jpg',
+            '/actual-files/outfit3/18-03-2026 vika6542.jpg',
+            '/actual-files/outfit3/18-03-2026 vika6545.jpg',
+            '/actual-files/outfit3/18-03-2026 vika6547.jpg',
+            '/actual-files/outfit3/18-03-2026 vika6549.jpg',
+            '/actual-files/outfit3/18-03-2026 vika6550.jpg',
         ],
+        video: '/actual-files/outfit3/3.mp4',
         sizes: ['XS', 'S', 'M', 'L', 'XL'],
         fabric: 'Pure Silk',
         care: 'Dry clean only',
-        description: 'Luxurious silk top and skirt set. Effortless elegance for any occasion.'
+        description: 'Luxurious coordinated set from the FAJE signature line. An impeccable silhouette for refined, modern styling.'
     }
 ];
 
