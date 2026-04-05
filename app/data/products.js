@@ -26,7 +26,7 @@ export const categories = [
         name: 'Outfits',
         slug: 'outfits',
         description: 'Complete co-ord sets and ensembles',
-        image: '/actual-files/outfit1/1.jpg'
+        image: '/actual-files/outfit3/18-03-2026 vika6549.jpg'
     }
 ];
 
