@@ -202,10 +202,28 @@ button,
   transform: scale(1.05);
 }
 
-/* Image Styles */
-img {
+/* Generic Media Styles */
+img, video {
   max-width: 100%;
   display: block;
+  animation: gracefulLoad 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes gracefulLoad {
+  0% {
+    opacity: 0;
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Elegant Placeholder Wrappers */
+.image-wrapper, .grid-image, .category-image, .lookbook-image, .product-card-image, .product-gallery, .hero-video-col, .video-reel-item {
+  background-color: var(--color-cream);
+  position: relative;
 }
 
 /* Utility Classes */
