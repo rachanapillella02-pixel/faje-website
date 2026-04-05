@@ -471,3 +471,104 @@
         margin-bottom: 2rem;
     }
 }
+
+/* Size Chart Modal */
+.size-chart-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInModal 0.2s ease;
+}
+
+.size-chart-modal {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 4px;
+    max-width: 800px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.size-chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-light-gray);
+    padding-bottom: 1rem;
+}
+
+.size-chart-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-family: var(--font-serif);
+    color: var(--color-wine);
+}
+
+.close-size-modal {
+    background: transparent;
+    border: none;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--color-gray);
+    cursor: pointer;
+    transition: color 0.2s;
+    margin-top: -10px;
+}
+
+.close-size-modal:hover {
+    color: var(--color-black);
+}
+
+.size-table-container {
+    overflow-x: auto;
+}
+
+.size-chart-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-family: var(--font-sans);
+}
+
+.size-chart-table th, .size-chart-table td {
+    padding: 1rem;
+    border: 1px solid var(--color-light-gray);
+}
+
+.size-chart-table th {
+    background: var(--color-cream);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--color-black);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.size-chart-table td {
+    font-size: 1rem;
+    color: var(--color-gray);
+}
+
+.size-chart-table tr:hover {
+    background: var(--color-beige-light);
+}
+
+@media (max-width: 768px) {
+    .size-chart-modal {
+        padding: 1.5rem;
+    }
+    .size-chart-table th, .size-chart-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+    }
+}

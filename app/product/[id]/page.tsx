@@ -58,6 +58,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     const resolvedParams = use(params);
     const product: Product | undefined = getProductById(resolvedParams.id);
     const [selectedSize, setSelectedSize] = useState('');
+    const [showSizeChart, setShowSizeChart] = useState(false);
     // currentImageIndex: 0...(images.length-1) = image; images.length = video
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const { addToCart, showModal, cart, updateQuantity } = useCart();
@@ -247,7 +248,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                         <div className="size-section">
                             <div className="size-header">
                                 <label>Size</label>
-                                <Link href="#" className="size-guide">Size Chart</Link>
+                                <button 
+                                    className="size-guide"
+                                    onClick={(e) => { e.preventDefault(); setShowSizeChart(true); }}
+                                    style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+                                >
+                                    Size Chart
+                                </button>
                             </div>
                             <div className="size-grid">
                                 {product.sizes.map((size) => (
@@ -356,6 +363,41 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     </div>
                 </div>
             </div>
+
+            {/* Size Chart Modal */}
+            {showSizeChart && (
+                <div className="size-chart-modal-overlay" onClick={() => setShowSizeChart(false)}>
+                    <div className="size-chart-modal" onClick={e => e.stopPropagation()}>
+                        <div className="size-chart-header">
+                            <h2>Size Guide</h2>
+                            <button className="close-size-modal" onClick={() => setShowSizeChart(false)}>&times;</button>
+                        </div>
+                        <div className="size-table-container">
+                            <table className="size-chart-table">
+                                <thead>
+                                    <tr>
+                                        <th>SIZE (IN)</th>
+                                        <th>BUST</th>
+                                        <th>WAIST</th>
+                                        <th>HIP</th>
+                                        <th>ARMHOLE</th>
+                                        <th>DRESS<br/>LENGTH</th>
+                                        <th>PANT<br/>LENGTH</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>XS</td><td>32</td><td>25</td><td>34</td><td>16</td><td>57</td><td>42</td></tr>
+                                    <tr><td>S</td><td>34</td><td>27</td><td>36</td><td>17</td><td>57</td><td>42</td></tr>
+                                    <tr><td>M</td><td>36</td><td>29</td><td>38</td><td>18</td><td>57</td><td>42</td></tr>
+                                    <tr><td>L</td><td>38</td><td>31</td><td>40</td><td>19</td><td>57</td><td>42</td></tr>
+                                    <tr><td>XL</td><td>40</td><td>33</td><td>42</td><td>20</td><td>57</td><td>42</td></tr>
+                                    <tr><td>XXL</td><td>42</td><td>36</td><td>44</td><td>21</td><td>57</td><td>42</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
