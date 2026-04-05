@@ -42,7 +42,7 @@ export const products = [
             '/images/products/dress/dress-wine-1.png',
             '/images/products/dress/dress-beige-1.png'
         ],
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Premium Silk',
         care: 'Dry clean only',
         description: 'An elegant wine-colored silk midi dress featuring a sophisticated silhouette. Perfect for evening events and special occasions.'
@@ -56,7 +56,7 @@ export const products = [
             '/images/products/dress/dress-beige-1.png',
             '/images/products/dress/dress-wine-1.png'
         ],
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Premium Linen',
         care: 'Machine wash cold',
         description: 'A flowing beige linen maxi dress with elegant draping. Breathable and perfect for warm weather elegance.'
@@ -70,7 +70,7 @@ export const products = [
             '/images/products/dress/dress-001-1.png',
             '/images/products/dress/dress-002-1.png'
         ],
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Silk Blend',
         care: 'Dry clean only',
         description: 'Classic wrap dress in luxurious silk blend. Flattering silhouette with adjustable fit.'
@@ -86,7 +86,7 @@ export const products = [
             '/images/products/tops/top-silk-1.png',
             '/images/products/tops/top-001-1.png'
         ],
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Pure Silk',
         care: 'Dry clean only',
         description: 'Luxurious cream silk blouse with elegant draping. Versatile piece for both professional and casual settings.'
@@ -100,7 +100,7 @@ export const products = [
             '/images/products/tops/top1.png',
             '/images/products/tops/top2.png'
         ],
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Cotton Poplin',
         care: 'Machine wash cold',
         description: 'Contemporary oversized shirt in premium cotton. Perfect for effortless chic styling.'
@@ -114,7 +114,7 @@ export const products = [
             '/images/products/tops/top3.png',
             '/images/products/tops/top5.png'
         ],
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Silk Satin',
         care: 'Dry clean only',
         description: 'Romantic puff sleeve top in luxurious silk satin. Statement piece for special occasions.'
@@ -128,7 +128,7 @@ export const products = [
             '/images/products/tops/top6.png',
             '/images/products/tops/op4.png'
         ],
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Cotton Blend',
         care: 'Machine wash cold',
         description: 'Timeless blouse design in premium cotton blend. A wardrobe essential for any occasion.'
@@ -144,7 +144,7 @@ export const products = [
             '/images/products/bottoms/bot1.png',
             '/images/products/bottoms/bot2.png'
         ],
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Wool Blend',
         care: 'Dry clean only',
         description: 'High-waisted tailored trousers in neutral beige. Impeccable fit with premium tailoring.'
@@ -158,7 +158,7 @@ export const products = [
             '/images/products/bottoms/bot3.png',
             '/images/products/bottoms/bot5.png'
         ],
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Linen Blend',
         care: 'Machine wash cold',
         description: 'Flowing wide-leg pants in premium linen blend. Comfortable and sophisticated.'
@@ -172,7 +172,7 @@ export const products = [
             '/images/products/bottoms/bot6.png',
             '/images/products/bottoms/bot.png'
         ],
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Silk Crepe',
         care: 'Dry clean only',
         description: 'Elegant pleated midi skirt in silk crepe. Timeless piece for refined styling.'
@@ -195,7 +195,7 @@ export const products = [
             '/actual-files/outfit1/18-03-2026 vika6495.jpg',
         ],
         video: '/actual-files/outfit1/1.mp4',
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Textured Shimmer Blend',
         care: 'Dry clean only',
         description: 'Make a striking entrance with The Shimmer Set. This captivating ensemble features a beautifully ruched azure halter-neck crop top paired with a matching draped maxi skirt. The dramatic thigh-high slit and textured shimmer fabric create dynamic movement and an unforgettable silhouette for evening events.'
@@ -214,7 +214,7 @@ export const products = [
             '/actual-files/outfit2/18-03-2026 vika6532.jpg',
         ],
         video: '/actual-files/outfit2/2.mp4',
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Premium Silk Satin',
         care: 'Dry clean only',
         description: 'The Satin Edit redefines modern elegance. Crafted from rich, fluid maroon satin, this stunning piece features delicate straps, a contemporary waist cutout detail, and a confident high thigh slit. It is thoughtfully draped to flatter the feminine form and exude quiet luxury.'
@@ -233,7 +233,7 @@ export const products = [
             '/actual-files/outfit3/18-03-2026 vika6550.jpg',
         ],
         video: '/actual-files/outfit3/3.mp4',
-        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
         fabric: 'Silk Crepe & Premium Blend',
         care: 'Dry clean only',
         description: 'A masterclass in contrast, The White Drape is the pinnacle of modern Indo-Western luxury. It features a sweeping, asymmetrical white one-shoulder drape that cascades beautifully, perfectly balanced by exceptionally tailored black wide-leg trousers for a bold, powerful look.'
