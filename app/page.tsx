@@ -89,14 +89,23 @@ export default function Home() {
             Explore Collections <ArrowRight size={20} />
           </Link>
         </div>
-        <div className="hero-image">
-          <Image
-            src="/images/hero.png"
-            alt="FAJE New Age Fashion"
-            fill
-            priority
-            style={{ objectFit: 'cover' }}
-          />
+        {/* 3-Video Collage Background */}
+        <div className="hero-video-collage">
+          <div className="hero-video-col">
+            <video autoPlay muted loop playsInline>
+              <source src="/actual-files/outfit1/1-compressed.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div className="hero-video-col">
+            <video autoPlay muted loop playsInline>
+              <source src="/actual-files/outfit2/2-compressed.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div className="hero-video-col">
+            <video autoPlay muted loop playsInline>
+              <source src="/actual-files/outfit3/3-compressed.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </section>
 
@@ -104,25 +113,25 @@ export default function Home() {
       <section className="featured-grid">
         <div className="container">
           <div className="grid-layout">
-            {/* Large Feature - Dresses */}
-            <Link href="/products/dresses" className="grid-item large">
+            {/* Large Feature - Elegant Dresses → outfit 2 */}
+            <Link href="/product/outfit-002" className="grid-item large" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="grid-image">
                 <Image
-                  src="/images/categories/dresses.png"
+                  src="/actual-files/outfit2/18-03-2026 vika6521.jpg"
                   alt="Dresses Collection"
                   fill
-                  style={{ objectFit: 'cover' }}
+                  style={{ objectFit: 'cover', objectPosition: 'top' }}
                 />
               </div>
               <div className="grid-content">
-                <h2>Elegant Dresses</h2>
-                <p>Timeless pieces for every occasion</p>
+                <h2>The Satin Edit</h2>
+                <p>Luxurious drape and elegant silhouette</p>
                 <span className="grid-link">Shop Now →</span>
               </div>
             </Link>
 
-            {/* Medium Feature - Tops */}
-            <div className="grid-item medium">
+            {/* Medium Feature - Sophisticated Tops → outfit 1 */}
+            <Link href="/product/outfit-001" className="grid-item medium" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="grid-image">
                 <Image
                   src="/actual-files/outfit1/18-03-2026 vika6495.jpg"
@@ -132,12 +141,13 @@ export default function Home() {
                 />
               </div>
               <div className="grid-content">
-                <h3>Sophisticated Tops</h3>
+                <h3>The Shimmer Set</h3>
+                <span className="grid-link">Shop Now →</span>
               </div>
-            </div>
+            </Link>
 
-            {/* Medium Feature - Bottoms */}
-            <div className="grid-item medium">
+            {/* Medium Feature - Tailored Bottoms → outfit 3 */}
+            <Link href="/product/outfit-003" className="grid-item medium" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="grid-image">
                 <Image
                   src="/actual-files/outfit3/18-03-2026 vika6542.jpg"
@@ -147,9 +157,10 @@ export default function Home() {
                 />
               </div>
               <div className="grid-content">
-                <h3>Tailored Bottoms</h3>
+                <h3>The White Drape</h3>
+                <span className="grid-link">Shop Now →</span>
               </div>
-            </div>
+            </Link>
 
             {/* Small Feature - Text Block */}
             <div className="grid-item small text-block">
@@ -161,10 +172,10 @@ export default function Home() {
             <Link href="/products/outfits" className="grid-item large-horizontal">
               <div className="grid-image">
                 <Image
-                  src="/images/categories/outfits.png"
+                  src="/actual-files/outfit1/1.jpg"
                   alt="Outfits Collection"
                   fill
-                  style={{ objectFit: 'cover' }}
+                  style={{ objectFit: 'cover', objectPosition: 'top' }}
                 />
               </div>
               <div className="grid-content">
@@ -184,10 +195,10 @@ export default function Home() {
           <div className="showcase-left">
             <div className="showcase-image-small">
               <Image
-                src="/images/products/dress/dress-wine-1.png"
+                src="/actual-files/outfit3/18-03-2026 vika6549.jpg"
                 alt="Premium Dress"
                 fill
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: 'cover', objectPosition: 'top' }}
               />
             </div>
             <p className="showcase-desc">
@@ -213,10 +224,10 @@ export default function Home() {
             </h2>
             <div className="showcase-model-image">
               <Image
-                src="/images/hero.png"
+                src="/actual-files/outfit1/18-03-2026 vika6482.jpg"
                 alt="FAJE Fashion Model"
                 fill
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: 'cover', objectPosition: 'top' }}
               />
             </div>
           </div>
@@ -225,16 +236,16 @@ export default function Home() {
           <div className="showcase-right">
             <div className="showcase-sparkles">✦ ✦</div>
             <div className="product-card-featured">
-              <h4 className="product-card-title">Silk Midi Dress</h4>
+              <h4 className="product-card-title">The Satin Edit</h4>
               <div className="product-card-image">
                 <Image
                   src="/actual-files/outfit2/18-03-2026 vika6513.jpg"
-                  alt="Silk Midi Dress"
+                  alt="The Satin Edit"
                   fill
                   style={{ objectFit: 'cover' }}
                 />
               </div>
-              <Link href="/product/dress-001" className="product-card-cta">
+              <Link href="/product/outfit-002" className="product-card-cta">
                 VIEW DETAILS →
               </Link>
             </div>
@@ -259,6 +270,58 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Video Reel Section */}
+      <section className="video-reel-section">
+        <div className="video-reel-header">
+          <p className="video-reel-label">IN MOTION</p>
+          <h2 className="video-reel-title">Our Collections, <span className="video-reel-italic">alive</span></h2>
+        </div>
+        <div className="video-reel-grid">
+          <div className="video-reel-item">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            >
+              <source src="/actual-files/outfit1/1-compressed.mp4" type="video/mp4" />
+            </video>
+            <div className="video-reel-overlay">
+              <span>Outfit 01</span>
+            </div>
+          </div>
+          <div className="video-reel-item">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            >
+              <source src="/actual-files/outfit2/2-compressed.mp4" type="video/mp4" />
+            </video>
+            <div className="video-reel-overlay">
+              <span>Outfit 02</span>
+            </div>
+          </div>
+          <div className="video-reel-item">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            >
+              <source src="/actual-files/outfit3/3-compressed.mp4" type="video/mp4" />
+            </video>
+            <div className="video-reel-overlay">
+              <span>Outfit 03</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Dual Feature Section */}
       <section className="dual-feature">
         <div className="feature-block">
@@ -270,13 +333,24 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="feature-block image-bg">
-          <Image
-            src="/images/categories/dresses.png"
-            alt="Fashion Collection"
-            fill
-            style={{ objectFit: 'cover' }}
-          />
+        <div className="feature-block image-bg" style={{ overflow: 'hidden' }}>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center'
+            }}
+          >
+            <source src="/actual-files/outfit3/3-compressed.mp4" type="video/mp4" />
+          </video>
         </div>
       </section>
 
@@ -286,21 +360,17 @@ export default function Home() {
           <h2 className="section-title">Why Choose FAJE</h2>
           <div className="features-grid">
             <div className="feature-card">
-              <h3>Premium Quality</h3>
-              <p>Only the finest fabrics and materials, sourced from trusted suppliers worldwide.</p>
+              <h3>Confident Styling</h3>
+              <p>Fashion that feels fresh, distinctive, and removes hesitation, letting you confidently express your modern identity.</p>
             </div>
             <div className="feature-card">
-              <h3>Timeless Design</h3>
-              <p>Contemporary pieces that blend modern aesthetics with classic elegance.</p>
+              <h3>Attainable Premium</h3>
+              <p>Strong design identity and quality construction that sits in a premium yet accessible space.</p>
             </div>
             <div className="feature-card">
-              <h3>Perfect Fit</h3>
-              <p>Thoughtfully tailored to flatter and celebrate the feminine form.</p>
+              <h3>Modern Indo-Western</h3>
+              <p>Contemporary pieces that blend modern global aesthetics with rooted styling for the new age consumer.</p>
             </div>
-            {/* <div className="feature-card">
-              <h3>Sustainable</h3>
-              <p>Committed to ethical production and sustainable fashion practices.</p>
-            </div> */}
           </div>
         </div>
       </section>
@@ -333,31 +403,31 @@ export default function Home() {
 
           <div className="nc-scroll-container">
 
-            {/* Outfit 1 */}
+            {/* The Shimmer Set */}
             <HoverVideoCard
                 href="/product/outfit-001"
                 imageSrc="/actual-files/outfit1/1.jpg"
                 videoSrc="/actual-files/outfit1/1-compressed.mp4"
-                title="Outfit 1"
-                price="₹5"
+                title="The Shimmer Set"
+                price=""
             />
 
-            {/* Outfit 2 */}
+            {/* The Satin Edit */}
             <HoverVideoCard
                 href="/product/outfit-002"
                 imageSrc="/actual-files/outfit2/18-03-2026 vika6511.jpg"
                 videoSrc="/actual-files/outfit2/2-compressed.mp4"
-                title="Outfit 2"
-                price="₹4"
+                title="The Satin Edit"
+                price=""
             />
 
-            {/* Outfit 3 */}
+            {/* The White Drape */}
             <HoverVideoCard
                 href="/product/outfit-003"
                 imageSrc="/actual-files/outfit3/18-03-2026 vika6539.jpg"
                 videoSrc="/actual-files/outfit3/3-compressed.mp4"
-                title="Outfit 3"
-                price="₹5"
+                title="The White Drape"
+                price=""
             />
 
           </div>

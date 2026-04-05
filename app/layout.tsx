@@ -19,9 +19,9 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "FAJE - New Age Fashion",
-  description: "Designed for the bold, feminine & confident. Premium luxury fashion for modern women.",
-  keywords: ["fashion", "luxury", "women's clothing", "dresses", "co-ord sets", "ethnic wear", "FAJE"],
+  title: "FAJE - Premium Modern Fashion",
+  description: "FAJÉ delivers fashion that feels modern, confident, premium, and attainable. Luxury should feel personal and possible.",
+  keywords: ["fashion", "premium clothing", "modern attire", "co-ord sets", "accessible luxury", "FAJE"],
   authors: [{ name: "FAJE Team" }],
   icons: {
     icon: "/logo.png",
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   openGraph: {
-    title: "FAJE - New Age Fashion",
-    description: "Premium luxury fashion for modern women. Designed for the bold, feminine & confident.",
+    title: "FAJE - Premium Modern Fashion",
+    description: "FAJÉ delivers fashion that feels modern, confident, premium, and attainable. You can own this now.",
     siteName: "FAJE",
     images: [
       {
@@ -45,8 +45,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "FAJE - New Age Fashion",
-    description: "Premium luxury fashion for modern women.",
+    title: "FAJE - Premium Modern Fashion",
+    description: "Premium yet accessible luxury fashion for modern individuals.",
     images: ["/logo.png"],
   },
 };

@@ -20,23 +20,24 @@ export default function AboutPage() {
                         <div className="story-content">
                             <h2>Our Story</h2>
                             <p>
-                                FAJE is more than just a fashion brand – it&apos;s a celebration of the modern woman.
-                                Born from a passion for creating pieces that empower, inspire, and elevate, we believe
-                                that fashion should be an expression of confidence and individuality.
+                                FAJÉ was created to bridge the gap between aspirational style and attainable reality. 
+                                We believe that luxury should feel personal, and equally important—it should feel possible.
                             </p>
                             <p>
-                                Every piece in our collection is thoughtfully designed to embody feminine strength,
-                                contemporary elegance, and timeless sophistication. We craft garments for women who
-                                dare to stand out, who embrace their boldness, and who refuse to compromise on quality.
+                                Our brand sits in a unique space—delivering strong design identity, modern Indo-Western aesthetics, 
+                                and confident styling. We remove the hesitation from fashion, allowing you to confidently 
+                                express your ambition and modern identity without waiting for "someday."
                             </p>
                         </div>
                         <div className="story-image">
                             <div className="image-wrapper">
-                                <Image
-                                    src="/images/hero.png"
-                                    alt="FAJE Fashion"
-                                    fill
-                                    style={{ objectFit: 'cover' }}
+                                <video
+                                    src="/actual-files/outfit2/2-compressed.mp4"
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
                                 />
                             </div>
                         </div>
@@ -51,34 +52,34 @@ export default function AboutPage() {
 
                     <div className="values-grid">
                         <div className="value-card">
-                            <h3>Feminine Confidence</h3>
+                            <h3>Modern & Confident</h3>
                             <p>
-                                We design for women who embrace their femininity with confidence and grace.
-                                Each piece is crafted to make you feel powerful and beautiful.
+                                Fashion that feels fresh, distinct, and empowering. Designed for people who want to feel 
+                                confident and proud of what they wear.
                             </p>
                         </div>
 
                         <div className="value-card">
-                            <h3>Modern Silhouettes</h3>
+                            <h3>Premium Yet Attainable</h3>
                             <p>
-                                Our collections feature contemporary cuts and designs that blend timeless
-                                elegance with modern aesthetics for the new age woman.
+                                We offer quality construction and premium styling with realistic pricing. 
+                                It's not just about admiring an outfit—it's about confidently making it yours.
                             </p>
                         </div>
 
                         <div className="value-card">
-                            <h3>Premium Quality</h3>
+                            <h3>Relatable Identity</h3>
                             <p>
-                                We believe in creating pieces that last. Every garment is made with the
-                                finest fabrics and meticulous attention to detail.
+                                The face of FAJÉ represents everyday fashion-forward individuals—creators, professionals, 
+                                and students who are building their presence.
                             </p>
                         </div>
 
                         <div className="value-card">
-                            <h3>Bold Expression</h3>
+                            <h3>Psychological Accessibility</h3>
                             <p>
-                                Fashion is a form of self-expression. We create pieces for women who aren&apos;t
-                                afraid to make a statement and stand out from the crowd.
+                                We don't communicate exclusivity; we communicate confidence. We want you to know: 
+                                You don’t need permission to feel confident, and you don’t need to wait.
                             </p>
                         </div>
                     </div>

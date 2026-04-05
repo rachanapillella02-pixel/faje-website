@@ -1,17 +1,24 @@
 import Image from 'next/image';
 import './lookbook.css';
 
+type LookbookItem =
+    | { id: number; type: 'image'; src: string; alt: string }
+    | { id: number; type: 'video'; src: string; poster: string };
+
 export default function LookbookPage() {
-    const lookbookImages = [
-        { id: 7, src: '/actual-files/outfit1/18-03-2026 vika6495.jpg', alt: 'New Outfit 1' },
-        { id: 8, src: '/actual-files/outfit2/18-03-2026 vika6513.jpg', alt: 'New Outfit 2' },
-        { id: 9, src: '/actual-files/outfit3/18-03-2026 vika6542.jpg', alt: 'New Outfit 3' },
-        { id: 1, src: '/images/hero.png', alt: 'FAJE Collection 1' },
-        { id: 2, src: '/images/categories/dresses.png', alt: 'FAJE Collection 2' },
-        { id: 3, src: '/images/categories/co-ords.png', alt: 'FAJE Collection 3' },
-        { id: 4, src: '/images/categories/ethnic.png', alt: 'FAJE Collection 4' },
-        { id: 5, src: '/images/categories/party.png', alt: 'FAJE Collection 5' },
-        { id: 6, src: '/images/categories/tops.png', alt: 'FAJE Collection 6' },
+    const lookbookItems: LookbookItem[] = [
+        // Outfit 1
+        { id: 1, type: 'image', src: '/actual-files/outfit1/18-03-2026 vika6495.jpg', alt: 'Outfit 1 — Look A' },
+        { id: 2, type: 'image', src: '/actual-files/outfit1/18-03-2026 vika6482.jpg', alt: 'Outfit 1 — Look B' },
+        { id: 3, type: 'video', src: '/actual-files/outfit1/1-compressed.mp4', poster: '/actual-files/outfit1/18-03-2026 vika6495.jpg' },
+        // Outfit 2
+        { id: 4, type: 'image', src: '/actual-files/outfit2/18-03-2026 vika6511.jpg', alt: 'Outfit 2 — Look A' },
+        { id: 5, type: 'image', src: '/actual-files/outfit2/18-03-2026 vika6521.jpg', alt: 'Outfit 2 — Look B' },
+        { id: 6, type: 'video', src: '/actual-files/outfit2/2-compressed.mp4', poster: '/actual-files/outfit2/18-03-2026 vika6511.jpg' },
+        // Outfit 3
+        { id: 7, type: 'image', src: '/actual-files/outfit3/18-03-2026 vika6539.jpg', alt: 'Outfit 3 — Look A' },
+        { id: 8, type: 'image', src: '/actual-files/outfit3/18-03-2026 vika6549.jpg', alt: 'Outfit 3 — Look B' },
+        { id: 9, type: 'video', src: '/actual-files/outfit3/3-compressed.mp4', poster: '/actual-files/outfit3/18-03-2026 vika6539.jpg' },
     ];
 
     return (
@@ -25,18 +32,30 @@ export default function LookbookPage() {
 
                 {/* Lookbook Grid */}
                 <div className="lookbook-grid">
-                    {lookbookImages.map((image, index) => (
+                    {lookbookItems.map((item, index) => (
                         <div
-                            key={image.id}
+                            key={item.id}
                             className={`lookbook-item ${index % 5 === 0 ? 'large' : ''}`}
                         >
                             <div className="lookbook-image">
-                                <Image
-                                    src={image.src}
-                                    alt={image.alt}
-                                    fill
-                                    style={{ objectFit: 'cover' }}
-                                />
+                                {item.type === 'video' ? (
+                                    <video
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
+                                        poster={item.poster}
+                                    >
+                                        <source src={item.src} type="video/mp4" />
+                                    </video>
+                                ) : (
+                                    <Image
+                                        src={item.src}
+                                        alt={item.alt}
+                                        fill
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                )}
                             </div>
                         </div>
                     ))}

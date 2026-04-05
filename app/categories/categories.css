@@ -63,8 +63,7 @@
     left: 0;
     right: 0;
     background: linear-gradient(to top,
-            rgba(114, 47, 55, 0.95),
-            rgba(114, 47, 55, 0.7),
+            rgba(0, 0, 0, 0.8),
             transparent);
     padding: 3rem 2rem 2rem;
     color: white;
@@ -73,9 +72,9 @@
 
 .category-card:hover .category-overlay {
     background: linear-gradient(to top,
-            rgba(114, 47, 55, 0.98),
-            rgba(114, 47, 55, 0.85),
-            rgba(114, 47, 55, 0.3));
+            rgba(0, 0, 0, 0.9),
+            rgba(0, 0, 0, 0.4),
+            transparent);
 }
 
 .category-overlay h2 {

@@ -26,7 +26,7 @@ export const categories = [
         name: 'Outfits',
         slug: 'outfits',
         description: 'Complete co-ord sets and ensembles',
-        image: '/images/categories/outfits.png'
+        image: '/actual-files/outfit1/1.jpg'
     }
 ];
 
@@ -181,7 +181,7 @@ export const products = [
     // OUTFITS
     {
         id: 'outfit-001',
-        name: 'Outfit 1',
+        name: 'The Shimmer Set',
         category: 'outfits',
         price: 5,
         images: [
@@ -196,13 +196,13 @@ export const products = [
         ],
         video: '/actual-files/outfit1/1.mp4',
         sizes: ['XS', 'S', 'M', 'L', 'XL'],
-        fabric: 'Premium Blend',
+        fabric: 'Textured Shimmer Blend',
         care: 'Dry clean only',
-        description: 'A stunning complete outfit set captured in our latest collection shoot. Effortlessly elegant and versatile for any occasion.'
+        description: 'Make a striking entrance with The Shimmer Set. This captivating ensemble features a beautifully ruched azure halter-neck crop top paired with a matching draped maxi skirt. The dramatic thigh-high slit and textured shimmer fabric create dynamic movement and an unforgettable silhouette for evening events.'
     },
     {
         id: 'outfit-002',
-        name: 'Outfit 2',
+        name: 'The Satin Edit',
         category: 'outfits',
         price: 4,
         images: [
@@ -215,13 +215,13 @@ export const products = [
         ],
         video: '/actual-files/outfit2/2.mp4',
         sizes: ['XS', 'S', 'M', 'L', 'XL'],
-        fabric: 'Premium Linen',
-        care: 'Machine wash cold',
-        description: 'A beautifully crafted ensemble from the FAJE collection. Light, breathable fabric perfect for a polished everyday look.'
+        fabric: 'Premium Silk Satin',
+        care: 'Dry clean only',
+        description: 'The Satin Edit redefines modern elegance. Crafted from rich, fluid maroon satin, this stunning piece features delicate straps, a contemporary waist cutout detail, and a confident high thigh slit. It is thoughtfully draped to flatter the feminine form and exude quiet luxury.'
     },
     {
         id: 'outfit-003',
-        name: 'Outfit 3',
+        name: 'The White Drape',
         category: 'outfits',
         price: 5,
         images: [
@@ -234,9 +234,9 @@ export const products = [
         ],
         video: '/actual-files/outfit3/3.mp4',
         sizes: ['XS', 'S', 'M', 'L', 'XL'],
-        fabric: 'Pure Silk',
+        fabric: 'Silk Crepe & Premium Blend',
         care: 'Dry clean only',
-        description: 'Luxurious coordinated set from the FAJE signature line. An impeccable silhouette for refined, modern styling.'
+        description: 'A masterclass in contrast, The White Drape is the pinnacle of modern Indo-Western luxury. It features a sweeping, asymmetrical white one-shoulder drape that cascades beautifully, perfectly balanced by exceptionally tailored black wide-leg trousers for a bold, powerful look.'
     }
 ];
 
