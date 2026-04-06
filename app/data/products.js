@@ -183,7 +183,7 @@ export const products = [
         id: 'outfit-001',
         name: 'The Shimmer Set',
         category: 'outfits',
-        price: 5,
+        price: 2999,
         images: [
             '/actual-files/outfit1/1.jpg',
             '/actual-files/outfit1/18-03-2026 vika6479.jpg',
@@ -204,7 +204,7 @@ export const products = [
         id: 'outfit-002',
         name: 'The Satin Edit',
         category: 'outfits',
-        price: 4,
+        price: 2899,
         images: [
             '/actual-files/outfit2/18-03-2026 vika6511.jpg',
             '/actual-files/outfit2/18-03-2026 vika6513.jpg',
@@ -223,7 +223,7 @@ export const products = [
         id: 'outfit-003',
         name: 'The White Drape',
         category: 'outfits',
-        price: 5,
+        price: 2799,
         images: [
             '/actual-files/outfit3/18-03-2026 vika6539.jpg',
             '/actual-files/outfit3/18-03-2026 vika6542.jpg',

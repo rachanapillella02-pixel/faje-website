@@ -283,6 +283,68 @@ img, video {
   }
 }
 
+/* Top Promo Banner */
+.top-promo-banner {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 0 15px;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  font-family: var(--font-sans);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+}
+
+.top-promo-separator {
+  opacity: 0.3;
+}
+
+@media (min-width: 769px) {
+  .promo-msg {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    position: static !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-promo-banner {
+    position: relative;
+    padding: 0;
+    height: 38px;
+    overflow: hidden;
+  }
+  .top-promo-separator {
+    display: none;
+  }
+  .promo-msg {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    font-size: 0.72rem;
+    opacity: 0;
+    animation: slickFade 7s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .promo-msg:nth-child(1) {
+    animation-delay: 0s;
+  }
+  .promo-msg:nth-child(3) {
+    animation-delay: 3.5s;
+  }
+}
+
+@keyframes slickFade {
+  0% { opacity: 0; transform: translateY(0%); }
+  10%, 40% { opacity: 1; transform: translateY(-50%); }
+  50%, 100% { opacity: 0; transform: translateY(-100%); }
+}
+
 /* Loading Spinner */
 .spinner {
   border: 3px solid var(--color-light-gray);

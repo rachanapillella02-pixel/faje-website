@@ -9,7 +9,7 @@ import './cart.css';
 
 const UPI_NUMBER = process.env.NEXT_PUBLIC_UPI_ID || '9618848356';
 const UPI_NAME = 'FAJE';
-const DELIVERY_CHARGE = 99;
+const BASE_DELIVERY_CHARGE = 159;
 
 export default function CartPage() {
     const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
@@ -27,7 +27,7 @@ export default function CartPage() {
     const [couponError, setCouponError] = useState('');
 
     const VALID_COUPONS: Record<string, { discount: number; label: string }> = {
-        'FAJE10': { discount: 0.10, label: '10% off on Slots, Campaigns & Influencer Marketing' },
+        'FAJE10': { discount: 0.10, label: '10% off on first order' },
         'LAUNCH20': { discount: 0.20, label: '20% off on first order' },
     };
 
@@ -59,7 +59,8 @@ export default function CartPage() {
     };
 
     const total = getTotalPrice();
-    const grandTotal = total + DELIVERY_CHARGE - getCouponDiscount();
+    const currentDeliveryCharge = total >= 2999 ? 0 : BASE_DELIVERY_CHARGE;
+    const grandTotal = total + currentDeliveryCharge - getCouponDiscount();
 
     // Build UPI deeplink and QR
     const upiString = `upi://pay?pa=${UPI_NUMBER}@ybl&pn=${encodeURIComponent(UPI_NAME)}&am=${grandTotal}&cu=INR&tn=${encodeURIComponent('FAJE Order')}`;
@@ -82,7 +83,7 @@ export default function CartPage() {
             formData.append('screenshot', screenshot);
             formData.append('orderData', JSON.stringify({
                 subtotal: total,
-                deliveryCharge: DELIVERY_CHARGE,
+                deliveryCharge: currentDeliveryCharge,
                 couponDiscount: getCouponDiscount(),
                 couponCode: couponApplied ? couponCode.trim().toUpperCase() : '',
                 total: grandTotal,
@@ -213,12 +214,12 @@ export default function CartPage() {
 
                             <div className="summary-row">
                                 <span>Delivery Charges</span>
-                                <span>₹{(99).toLocaleString('en-IN')}</span>
+                                <span>{currentDeliveryCharge > 0 ? `₹${currentDeliveryCharge.toLocaleString('en-IN')}` : <span style={{color: '#28a745', fontWeight: 'bold'}}>FREE</span>}</span>
                             </div>
 
                             <div className="summary-row total">
                                 <span>Total</span>
-                                <span>₹{(total + 99).toLocaleString('en-IN')}</span>
+                                <span>₹{grandTotal.toLocaleString('en-IN')}</span>
                             </div>
 
                             {/* UPI Pay Button */}
@@ -226,7 +227,7 @@ export default function CartPage() {
                                 className="btn btn-upi-pay"
                                 onClick={() => { setShowQR(true); setPayStep('contact'); setScreenshot(null); setScreenshotPreview(null); setQrLoaded(false); }}
                             >
-                                Pay ₹{(total + 99).toLocaleString('en-IN')} via UPI
+                                Pay ₹{grandTotal.toLocaleString('en-IN')} via UPI
                             </button>
 
                             <Link href="/categories" className="continue-shopping">
@@ -379,7 +380,7 @@ export default function CartPage() {
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fdf6f6', borderRadius: 8, padding: '12px 14px', marginTop: 14 }}>
                                         <span style={{ fontWeight: 600, color: '#5a2329', fontSize: 14 }}>Amount Payable</span>
                                         <span style={{ fontWeight: 700, fontSize: 16, color: '#5a2329' }}>
-                                            ₹{(total + DELIVERY_CHARGE - getCouponDiscount()).toLocaleString('en-IN')}
+                                            ₹{grandTotal.toLocaleString('en-IN')}
                                         </span>
                                     </div>
 

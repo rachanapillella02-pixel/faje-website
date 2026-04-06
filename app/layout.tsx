@@ -64,6 +64,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${playfair.variable} ${lato.variable}`}>
         <CartProvider>
+          <div className="top-promo-banner">
+            <span className="promo-msg">Use code <strong style={{color: '#D4AF37'}}>FAJE10</strong> for 10% off your first purchase!</span>
+            <span className="top-promo-separator">|</span>
+            <span className="promo-msg">Free shipping on orders above ₹2,999</span>
+          </div>
           <Navbar />
           <main>{children}</main>
           <Footer />

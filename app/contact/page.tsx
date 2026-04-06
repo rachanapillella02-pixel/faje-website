@@ -1,7 +1,42 @@
+'use client';
+
+import { useState } from 'react';
 import { Instagram, Mail } from 'lucide-react';
 import './contact.css';
 
 export default function ContactPage() {
+    const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus('submitting');
+        
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            if (res.ok) {
+                setStatus('success');
+                setFormData({ name: '', email: '', phone: '', message: '' });
+                setTimeout(() => setStatus('idle'), 5000);
+            } else {
+                setStatus('error');
+            }
+        } catch (error) {
+            console.error(error);
+            setStatus('error');
+        }
+    };
+
     return (
         <div className="contact-page">
             <div className="container">
@@ -55,13 +90,15 @@ export default function ContactPage() {
                     {/* Contact Form */}
                     <div className="contact-form-section">
                         <h2>Send Us a Message</h2>
-                        <form className="contact-form">
+                        <form className="contact-form" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="name">Name</label>
                                 <input
                                     type="text"
                                     id="name"
                                     name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
                                     placeholder="Your name"
                                     required
                                 />
@@ -73,6 +110,8 @@ export default function ContactPage() {
                                     type="email"
                                     id="email"
                                     name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     placeholder="your@email.com"
                                     required
                                 />
@@ -84,6 +123,8 @@ export default function ContactPage() {
                                     type="tel"
                                     id="phone"
                                     name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
                                     placeholder="+91 XXXXX XXXXX"
                                 />
                             </div>
@@ -94,13 +135,32 @@ export default function ContactPage() {
                                     id="message"
                                     name="message"
                                     rows={6}
+                                    value={formData.message}
+                                    onChange={handleChange}
                                     placeholder="How can we help you?"
                                     required
                                 ></textarea>
                             </div>
 
-                            <button type="submit" className="btn btn-primary">
-                                Send Message
+                            {status === 'success' && (
+                                <div style={{ marginBottom: '1rem', padding: '0.75rem', background: '#d1fae5', color: '#065f46', borderRadius: '4px', fontSize: '0.9rem' }}>
+                                    Your message was sent successfully! We'll get back to you soon.
+                                </div>
+                            )}
+                            
+                            {status === 'error' && (
+                                <div style={{ marginBottom: '1rem', padding: '0.75rem', background: '#fee2e2', color: '#b91c1c', borderRadius: '4px', fontSize: '0.9rem' }}>
+                                    There was an error sending your message. Please try again or email us directly.
+                                </div>
+                            )}
+
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary" 
+                                disabled={status === 'submitting'}
+                                style={{ opacity: status === 'submitting' ? 0.7 : 1 }}
+                            >
+                                {status === 'submitting' ? 'Sending...' : 'Send Message'}
                             </button>
                         </form>
                     </div>

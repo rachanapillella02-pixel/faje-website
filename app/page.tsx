@@ -26,25 +26,25 @@ function HoverVideoCard({ href, imageSrc, videoSrc, title, price }: { href: stri
   };
 
   return (
-    <Link 
-      href={href} 
-      className="nc-card" 
+    <Link
+      href={href}
+      className="nc-card"
       style={{ textDecoration: 'none', color: 'inherit' }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <span className="nc-category-tag">Outfits</span>
       <div className="nc-image-wrapper" style={{ position: 'relative' }}>
-        <Image 
-          src={imageSrc} 
-          alt={title} 
-          fill 
-          style={{ 
-            objectFit: 'cover', 
+        <Image
+          src={imageSrc}
+          alt={title}
+          fill
+          style={{
+            objectFit: 'cover',
             objectPosition: 'top',
             opacity: isHovered ? 0 : 1,
             transition: 'opacity 0.3s ease'
-          }} 
+          }}
         />
         <video
           ref={videoRef}
@@ -328,8 +328,8 @@ export default function Home() {
           <div className="feature-content">
             <h2 className=' color-white'>Timeless Elegance</h2>
             <p>Pieces designed to transcend seasons and trends</p>
-            <Link href="/products/dresses" className="btn btn-light">
-              Shop Dresses
+            <Link href="/products/outfits" className="btn btn-light">
+              Shop Outfits
             </Link>
           </div>
         </div>
@@ -405,29 +405,29 @@ export default function Home() {
 
             {/* The Shimmer Set */}
             <HoverVideoCard
-                href="/product/outfit-001"
-                imageSrc="/actual-files/outfit1/1.jpg"
-                videoSrc="/actual-files/outfit1/1-compressed.mp4"
-                title="The Shimmer Set"
-                price=""
+              href="/product/outfit-001"
+              imageSrc="/actual-files/outfit1/1.jpg"
+              videoSrc="/actual-files/outfit1/1-compressed.mp4"
+              title="The Shimmer Set"
+              price=""
             />
 
             {/* The Satin Edit */}
             <HoverVideoCard
-                href="/product/outfit-002"
-                imageSrc="/actual-files/outfit2/18-03-2026 vika6511.jpg"
-                videoSrc="/actual-files/outfit2/2-compressed.mp4"
-                title="The Satin Edit"
-                price=""
+              href="/product/outfit-002"
+              imageSrc="/actual-files/outfit2/18-03-2026 vika6511.jpg"
+              videoSrc="/actual-files/outfit2/2-compressed.mp4"
+              title="The Satin Edit"
+              price=""
             />
 
             {/* The White Drape */}
             <HoverVideoCard
-                href="/product/outfit-003"
-                imageSrc="/actual-files/outfit3/18-03-2026 vika6539.jpg"
-                videoSrc="/actual-files/outfit3/3-compressed.mp4"
-                title="The White Drape"
-                price=""
+              href="/product/outfit-003"
+              imageSrc="/actual-files/outfit3/18-03-2026 vika6539.jpg"
+              videoSrc="/actual-files/outfit3/3-compressed.mp4"
+              title="The White Drape"
+              price=""
             />
 
           </div>
