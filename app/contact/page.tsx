@@ -73,7 +73,7 @@ export default function ContactPage() {
                             </a>
 
                             <a
-                                href="mailto:contact@faje.com"
+                                href="mailto:contact@thefaje.com"
                                 className="contact-method"
                             >
                                 <div className="method-icon">
@@ -81,7 +81,7 @@ export default function ContactPage() {
                                 </div>
                                 <div className="method-details">
                                     <h3>Email</h3>
-                                    <p>contact@faje.com</p>
+                                    <p>contact@thefaje.com</p>
                                 </div>
                             </a>
                         </div>

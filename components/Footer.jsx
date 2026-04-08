@@ -48,13 +48,15 @@ export default function Footer() {
                              <Instagram size={24} />
                          </a>
                          <a
-                             href="mailto:contact@faje.com"
+                             href="mailto:contact@thefaje.com"
                              aria-label="Email"
                          >
                              <Mail size={24} />
                          </a>
                      </div>
-                     <p className="footer-email">contact@faje.com</p>
+                     <a className="footer-email" href="mailto:contact@thefaje.com">
+                         contact@thefaje.com
+                     </a>
                  </div>
             </div>
 
