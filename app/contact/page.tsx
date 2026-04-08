@@ -144,7 +144,7 @@ export default function ContactPage() {
 
                             {status === 'success' && (
                                 <div style={{ marginBottom: '1rem', padding: '0.75rem', background: '#d1fae5', color: '#065f46', borderRadius: '4px', fontSize: '0.9rem' }}>
-                                    Your message was sent successfully! We'll get back to you soon.
+                                    Your message was sent successfully! We&apos;ll get back to you soon.
                                 </div>
                             )}
                             

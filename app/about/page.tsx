@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import './about.css';
 
@@ -26,7 +25,7 @@ export default function AboutPage() {
                             <p>
                                 Our brand sits in a unique space—delivering strong design identity, modern Indo-Western aesthetics, 
                                 and confident styling. We remove the hesitation from fashion, allowing you to confidently 
-                                express your ambition and modern identity without waiting for "someday."
+                                express your ambition and modern identity without waiting for &quot;someday.&quot;
                             </p>
                         </div>
                         <div className="story-image">
@@ -63,7 +62,7 @@ export default function AboutPage() {
                             <h3>Premium Yet Attainable</h3>
                             <p>
                                 We offer quality construction and premium styling with realistic pricing. 
-                                It's not just about admiring an outfit—it's about confidently making it yours.
+                                It&apos;s not just about admiring an outfit—it&apos;s about confidently making it yours.
                             </p>
                         </div>
 
@@ -78,8 +77,8 @@ export default function AboutPage() {
                         <div className="value-card">
                             <h3>Psychological Accessibility</h3>
                             <p>
-                                We don't communicate exclusivity; we communicate confidence. We want you to know: 
-                                You don’t need permission to feel confident, and you don’t need to wait.
+                                We don&apos;t communicate exclusivity; we communicate confidence. We want you to know: 
+                                You don&apos;t need permission to feel confident, and you don&apos;t need to wait.
                             </p>
                         </div>
                     </div>
