@@ -69,8 +69,14 @@ export default function CartPage() {
     const upiString = `upi://pay?pa=${UPI_NUMBER}@ybl&pn=${encodeURIComponent(UPI_NAME)}&am=${grandTotal}&cu=INR&tn=${encodeURIComponent('FAJE Order')}`;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiString)}&color=5a2329&bgcolor=ffffff&margin=8`;
 
+    const MAX_PAYMENT_PROOF_BYTES = 10 * 1024 * 1024;
+
     const handleFile = (f: File | null) => {
         if (!f || !f.type.startsWith('image/')) return;
+        if (f.size > MAX_PAYMENT_PROOF_BYTES) {
+            alert('Image must be 10 MB or smaller.');
+            return;
+        }
         setScreenshot(f);
         const reader = new FileReader();
         reader.onloadend = () => setScreenshotPreview(reader.result as string);
@@ -103,7 +109,16 @@ export default function CartPage() {
                 setPayStep('done');
                 clearCart();
             } else {
-                alert('There was a problem uploading your proof. Please try again.');
+                let msg = 'There was a problem uploading your proof. Please try again.';
+                try {
+                    const err = (await res.json()) as { error?: string };
+                    if (err?.error && typeof err.error === 'string') {
+                        msg = err.error;
+                    }
+                } catch {
+                    /* ignore */
+                }
+                alert(msg);
             }
         } catch (error) {
             console.error(error);

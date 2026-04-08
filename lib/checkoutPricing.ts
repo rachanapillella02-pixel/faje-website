@@ -63,11 +63,21 @@ export function validateCheckoutOrder(data: {
             typeof i.quantity !== 'number' ||
             !Number.isFinite(i.price) ||
             !Number.isFinite(i.quantity) ||
+            !Number.isInteger(i.quantity) ||
             i.quantity < 1 ||
             i.price < 0
         ) {
             return { ok: false, message: 'Invalid line item' };
         }
+    }
+
+    if (
+        !Number.isFinite(data.subtotal) ||
+        !Number.isFinite(data.deliveryCharge) ||
+        !Number.isFinite(data.couponDiscount) ||
+        !Number.isFinite(data.total)
+    ) {
+        return { ok: false, message: 'Invalid order amounts' };
     }
 
     const computedSubtotal = Math.round(computeSubtotalFromLineItems(data.items));

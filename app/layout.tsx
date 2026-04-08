@@ -19,6 +19,9 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL as string,
+  ),
   title: "FAJE - Premium Modern Fashion",
   description: "FAJÉ delivers fashion that feels modern, confident, premium, and attainable. Luxury should feel personal and possible.",
   keywords: ["fashion", "premium clothing", "modern attire", "co-ord sets", "accessible luxury", "FAJE"],

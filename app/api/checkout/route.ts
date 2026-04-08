@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { validateCheckoutCustomer, validateCheckoutOrder } from '@/lib/checkoutPricing';
+import { appendOrderToGoogleSheet, isGoogleSheetsOrderLogConfigured } from '@/lib/googleSheetsOrderLog';
+import { buildCheckoutEmailBody, buildCheckoutEmailSubject } from '@/lib/orderNotificationContent';
+import { sanitizeAttachmentFilename } from '@/lib/sanitize';
+
+/** Reject huge uploads (DoS) and empty files. */
+const MAX_PAYMENT_PROOF_BYTES = 10 * 1024 * 1024;
 
 export async function POST(request: Request) {
     try {
@@ -14,6 +20,22 @@ export async function POST(request: Request) {
 
         if (!screenshotFile.type.startsWith('image/')) {
             return NextResponse.json({ error: 'Screenshot must be an image' }, { status: 400 });
+        }
+
+        if (!screenshotFile.size || screenshotFile.size > MAX_PAYMENT_PROOF_BYTES) {
+            return NextResponse.json(
+                {
+                    error: !screenshotFile.size
+                        ? 'Empty image file'
+                        : 'Screenshot must be 10 MB or smaller',
+                },
+                { status: 400 },
+            );
+        }
+
+        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+            console.error('[checkout] EMAIL_USER / EMAIL_PASS are not set');
+            return NextResponse.json({ error: 'Order email is not configured' }, { status: 503 });
         }
 
         let orderData: {
@@ -60,40 +82,59 @@ export async function POST(request: Request) {
             },
         });
 
-        const itemsList = orderData.items
-            .map(
-                (item: { quantity: number; name: string; size: string; price: number }) =>
-                    `- ${item.quantity}x ${item.name} (Size: ${item.size}) - ₹${item.price.toLocaleString('en-IN')}`,
-            )
-            .join('\n');
-
         const customer = orderData.customer!;
+        const safeFilename = sanitizeAttachmentFilename(screenshotFile.name || 'payment_proof.jpg');
 
-        const customerText = `Customer Details:
-Name: ${customer.name}
-Email: ${customer.email}
-Phone: ${customer.phone}
-Delivery Address: ${customer.address}
-`;
-
-        const pricingText = `Subtotal: ₹${orderData.subtotal.toLocaleString('en-IN')}
-Delivery Charge: ₹${orderData.deliveryCharge.toLocaleString('en-IN')}${orderData.couponCode ? `\nCoupon (${orderData.couponCode}): -₹${orderData.couponDiscount.toLocaleString('en-IN')}` : ''}
-Total Paid: ₹${orderData.total.toLocaleString('en-IN')}`;
+        const emailBody = buildCheckoutEmailBody({
+            customer: {
+                name: customer.name!,
+                email: customer.email!,
+                phone: customer.phone!,
+                address: customer.address!,
+            },
+            subtotal: orderData.subtotal,
+            deliveryCharge: orderData.deliveryCharge,
+            couponDiscount: orderData.couponDiscount,
+            couponCode: orderData.couponCode,
+            total: orderData.total,
+            items: orderData.items,
+        });
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: 'contact@faje.com',
-            subject: `FAJE: New Order & Payment - ₹${orderData.total.toLocaleString('en-IN')}`,
-            text: `A new customer order and payment proof has been submitted.\n\n${customerText}\n${pricingText}\n\nOrder Items:\n${itemsList}\n\nPlease check the attached screenshot to verify the UPI payment.`,
+            to: process.env.EMAIL_USER,
+            subject: buildCheckoutEmailSubject(orderData.total),
+            text: emailBody,
             attachments: [
                 {
-                    filename: screenshotFile.name || 'payment_proof.jpg',
+                    filename: safeFilename,
                     content: buffer,
                 },
             ],
         };
 
         await transporter.sendMail(mailOptions);
+
+        if (isGoogleSheetsOrderLogConfigured()) {
+            const sheetResult = await appendOrderToGoogleSheet({
+                subtotal: orderData.subtotal,
+                deliveryCharge: orderData.deliveryCharge,
+                couponDiscount: orderData.couponDiscount,
+                couponCode: orderData.couponCode,
+                total: orderData.total,
+                items: orderData.items,
+                customer: {
+                    name: customer.name!,
+                    email: customer.email!,
+                    phone: customer.phone!,
+                    address: customer.address!,
+                },
+                paymentScreenshotFilename: safeFilename,
+            });
+            if (!sheetResult.ok) {
+                console.warn('[checkout] Google Sheet log failed:', sheetResult.message);
+            }
+        }
 
         return NextResponse.json({ success: true, message: 'Email sent successfully' }, { status: 200 });
     } catch (error) {
