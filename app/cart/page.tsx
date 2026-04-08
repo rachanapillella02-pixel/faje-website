@@ -5,11 +5,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Trash2, Plus, Minus, ShoppingBag, Upload } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import {
+    CHECKOUT_COUPONS,
+    FREE_DELIVERY_SUBTOTAL_EXCEEDS,
+    IN_MOBILE_E164,
+    deliveryChargeForSubtotal,
+    getInPhoneDigits,
+    normalizeInPhoneDigits,
+} from '@/lib/checkoutPricing';
 import './cart.css';
 
 const UPI_NUMBER = process.env.NEXT_PUBLIC_UPI_ID || '9618848356';
 const UPI_NAME = 'FAJE';
-const BASE_DELIVERY_CHARGE = 159;
 
 export default function CartPage() {
     const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
@@ -26,14 +33,9 @@ export default function CartPage() {
     const [couponApplied, setCouponApplied] = useState(false);
     const [couponError, setCouponError] = useState('');
 
-    const VALID_COUPONS: Record<string, { discount: number; label: string }> = {
-        'FAJE10': { discount: 0.10, label: '10% off on first order' },
-        'LAUNCH20': { discount: 0.20, label: '20% off on first order' },
-    };
-
     const handleApplyCoupon = () => {
         const code = couponCode.trim().toUpperCase();
-        if (VALID_COUPONS[code]) {
+        if (CHECKOUT_COUPONS[code]) {
             setCouponApplied(true);
             setCouponError('');
         } else {
@@ -44,8 +46,8 @@ export default function CartPage() {
 
     const getCouponDiscount = () => {
         const code = couponCode.trim().toUpperCase();
-        if (couponApplied && VALID_COUPONS[code]) {
-            return Math.round(total * VALID_COUPONS[code].discount);
+        if (couponApplied && CHECKOUT_COUPONS[code]) {
+            return Math.round(total * CHECKOUT_COUPONS[code].discount);
         }
         return 0;
     };
@@ -59,7 +61,8 @@ export default function CartPage() {
     };
 
     const total = getTotalPrice();
-    const currentDeliveryCharge = total >= 2999 ? 0 : BASE_DELIVERY_CHARGE;
+    const currentDeliveryCharge = deliveryChargeForSubtotal(total);
+    const amountToFreeDelivery = Math.max(0, FREE_DELIVERY_SUBTOTAL_EXCEEDS + 1 - total);
     const grandTotal = total + currentDeliveryCharge - getCouponDiscount();
 
     // Build UPI deeplink and QR
@@ -216,6 +219,18 @@ export default function CartPage() {
                                 <span>Delivery Charges</span>
                                 <span>{currentDeliveryCharge > 0 ? `₹${currentDeliveryCharge.toLocaleString('en-IN')}` : <span style={{color: '#28a745', fontWeight: 'bold'}}>FREE</span>}</span>
                             </div>
+                            {currentDeliveryCharge > 0 ? (
+                                <p style={{ fontSize: 12, color: '#666', margin: '0 0 10px', lineHeight: 1.45 }}>
+                                    Free delivery applies only when your subtotal is strictly greater than ₹{FREE_DELIVERY_SUBTOTAL_EXCEEDS.toLocaleString('en-IN')}.
+                                    {amountToFreeDelivery > 0 && (
+                                        <> Add ₹{amountToFreeDelivery.toLocaleString('en-IN')} more to unlock free delivery.</>
+                                    )}
+                                </p>
+                            ) : (
+                                <p style={{ fontSize: 12, color: '#2d6a4f', margin: '0 0 10px', lineHeight: 1.45 }}>
+                                    Free delivery — your subtotal is above ₹{FREE_DELIVERY_SUBTOTAL_EXCEEDS.toLocaleString('en-IN')}.
+                                </p>
+                            )}
 
                             <div className="summary-row total">
                                 <span>Total</span>
@@ -314,13 +329,35 @@ export default function CartPage() {
                                 <div className="checkout-form" style={{ marginTop: 0, paddingTop: 10, borderTop: 'none' }}>
                                     <input type="text" placeholder="Full Name *" value={customer.name} onChange={e => setCustomer({ ...customer, name: e.target.value })} className="form-input" required />
                                     <input type="email" placeholder="Email Address *" value={customer.email} onChange={e => setCustomer({ ...customer, email: e.target.value })} className="form-input" required />
-                                    <input type="tel" placeholder="Phone Number *" value={customer.phone} onChange={e => setCustomer({ ...customer, phone: e.target.value })} className="form-input" required />
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#5a2329', marginBottom: 6 }}>Mobile number *</label>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                            <span style={{ fontWeight: 600, color: '#5a2329', fontSize: 15, flexShrink: 0 }}>+91</span>
+                                            <input
+                                                type="tel"
+                                                inputMode="numeric"
+                                                autoComplete="tel-national"
+                                                placeholder="9876543210"
+                                                value={getInPhoneDigits(customer.phone)}
+                                                onChange={e => setCustomer({ ...customer, phone: normalizeInPhoneDigits(e.target.value) })}
+                                                className="form-input"
+                                                style={{ flex: 1, marginBottom: 0 }}
+                                                maxLength={10}
+                                                pattern="[6-9][0-9]{9}"
+                                                title="Enter 10 digits starting with 6, 7, 8, or 9"
+                                                aria-invalid={getInPhoneDigits(customer.phone).length > 0 && !IN_MOBILE_E164.test(customer.phone)}
+                                            />
+                                        </div>
+                                        <p style={{ fontSize: 11, color: '#888', marginTop: 6, marginBottom: 0 }}>
+                                            10-digit Indian mobile (starts with 6–9)
+                                        </p>
+                                    </div>
 
                                     <button
                                         className="btn btn-paid"
                                         onClick={() => setPayStep('address')}
-                                        disabled={!customer.name || !customer.email || !customer.phone}
-                                        style={{ marginTop: 12, opacity: (!customer.name || !customer.email || !customer.phone) ? 0.7 : 1 }}
+                                        disabled={!customer.name || !customer.email || !IN_MOBILE_E164.test(customer.phone)}
+                                        style={{ marginTop: 12, opacity: (!customer.name || !customer.email || !IN_MOBILE_E164.test(customer.phone)) ? 0.7 : 1 }}
                                      >
                                         Next: Delivery Address →
                                     </button>
@@ -370,7 +407,7 @@ export default function CartPage() {
                                         >Apply</button>
                                     </div>
                                     {couponApplied && (
-                                        <p style={{ fontSize: 12, color: '#059669', marginTop: 4, fontWeight: 600 }}>✓ {VALID_COUPONS[couponCode.trim().toUpperCase()]?.label}</p>
+                                        <p style={{ fontSize: 12, color: '#059669', marginTop: 4, fontWeight: 600 }}>✓ {CHECKOUT_COUPONS[couponCode.trim().toUpperCase()]?.label}</p>
                                     )}
                                     {couponError && (
                                         <p style={{ fontSize: 12, color: '#e53e3e', marginTop: 4 }}>{couponError}</p>
@@ -406,7 +443,7 @@ export default function CartPage() {
                                     <div className="upi-badge" style={{ background: '#d1fae5', color: '#065f46' }}>Step 4 of 4</div>
                                     <h3 style={{ marginTop: 10, fontSize: 18, fontWeight: 700 }}>Upload Payment Screenshot</h3>
                                     <p style={{ fontSize: 13, color: '#888', marginTop: 4 }}>
-                                        Upload your ₹{total.toLocaleString('en-IN')} payment proof to confirm your order
+                                        Upload your ₹{grandTotal.toLocaleString('en-IN')} payment proof to confirm your order
                                     </p>
                                 </div>
 
