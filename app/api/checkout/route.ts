@@ -2,7 +2,16 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { validateCheckoutCustomer, validateCheckoutOrder } from '@/lib/checkoutPricing';
 import { appendOrderToGoogleSheet, isGoogleSheetsOrderLogConfigured } from '@/lib/googleSheetsOrderLog';
-import { buildCheckoutEmailBody, buildCheckoutEmailSubject } from '@/lib/orderNotificationContent';
+import {
+    buildCheckoutEmailBody,
+    buildCheckoutEmailBodyHtml,
+    buildCheckoutEmailSubject,
+    buildCustomerOrderConfirmationBody,
+    buildCustomerOrderConfirmationBodyHtml,
+    buildCustomerOrderConfirmationSubject,
+    type OrderNotificationInput,
+} from '@/lib/orderNotificationContent';
+import { FAJE_EMAIL_LOGO_CID, loadFajeEmailLogoBuffer } from '@/lib/fajeEmailLogo';
 import { sanitizeAttachmentFilename } from '@/lib/sanitize';
 
 /** Reject huge uploads (DoS) and empty files. */
@@ -33,7 +42,9 @@ export async function POST(request: Request) {
             );
         }
 
-        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+        const smtpFrom = process.env.EMAIL_USER;
+        const smtpPass = process.env.EMAIL_PASS;
+        if (!smtpFrom || !smtpPass) {
             console.error('[checkout] EMAIL_USER / EMAIL_PASS are not set');
             return NextResponse.json({ error: 'Order email is not configured' }, { status: 503 });
         }
@@ -84,18 +95,26 @@ export async function POST(request: Request) {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
+                user: smtpFrom,
+                pass: smtpPass,
             },
         });
 
         const customer = orderData.customer!;
+        /**
+         * Strict envelope for the shopper confirmation:
+         * - `from` / SMTP auth: only `smtpFrom` (EMAIL_USER).
+         * - `to`: only this value — trimmed `orderData.customer.email` from the JSON body.
+         * That JSON is built from the cart modal field `customer.email` (“Email Address *” in Step 1).
+         */
+        const checkoutRecipientEmail = String(customer.email).trim();
         const safeFilename = sanitizeAttachmentFilename(screenshotFile.name || 'payment_proof.jpg');
+        const logoBuffer = loadFajeEmailLogoBuffer();
 
-        const emailBody = buildCheckoutEmailBody({
+        const orderForEmail: OrderNotificationInput = {
             customer: {
                 name: customer.name!,
-                email: customer.email!,
+                email: checkoutRecipientEmail,
                 phone: customer.phone!,
                 address: customer.address!,
             },
@@ -105,14 +124,24 @@ export async function POST(request: Request) {
             couponCode: orderData.couponCode,
             total: orderData.total,
             items: orderData.items,
-        });
+        };
+
+        const emailBody = buildCheckoutEmailBody(orderForEmail);
 
         const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER,
+            from: smtpFrom,
+            to: smtpFrom,
             subject: buildCheckoutEmailSubject(orderData.total),
             text: emailBody,
+            html: buildCheckoutEmailBodyHtml(orderForEmail, FAJE_EMAIL_LOGO_CID),
             attachments: [
+                {
+                    filename: 'faje-logo.png',
+                    content: logoBuffer,
+                    cid: FAJE_EMAIL_LOGO_CID,
+                    contentDisposition: 'inline' as const,
+                    contentType: 'image/png',
+                },
                 {
                     filename: safeFilename,
                     content: buffer,
@@ -121,6 +150,28 @@ export async function POST(request: Request) {
         };
 
         await transporter.sendMail(mailOptions);
+
+        try {
+            await transporter.sendMail({
+                from: smtpFrom,
+                to: checkoutRecipientEmail,
+                subject: buildCustomerOrderConfirmationSubject(orderData.total),
+                text: buildCustomerOrderConfirmationBody(orderForEmail),
+                html: buildCustomerOrderConfirmationBodyHtml(orderForEmail, FAJE_EMAIL_LOGO_CID),
+                replyTo: process.env.EMAIL_REPLY_TO?.trim() || smtpFrom,
+                attachments: [
+                    {
+                        filename: 'faje-logo.png',
+                        content: logoBuffer,
+                        cid: FAJE_EMAIL_LOGO_CID,
+                        contentDisposition: 'inline' as const,
+                        contentType: 'image/png',
+                    },
+                ],
+            });
+        } catch (customerMailErr) {
+            console.error('[checkout] Customer confirmation email failed:', customerMailErr);
+        }
 
         if (isGoogleSheetsOrderLogConfigured()) {
             const sheetResult = await appendOrderToGoogleSheet({
@@ -132,7 +183,7 @@ export async function POST(request: Request) {
                 items: orderData.items,
                 customer: {
                     name: customer.name!,
-                    email: customer.email!,
+                    email: checkoutRecipientEmail,
                     phone: customer.phone!,
                     address: customer.address!,
                 },

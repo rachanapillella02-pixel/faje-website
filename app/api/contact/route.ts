@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { isValidEmailBasic } from '@/lib/checkoutPricing';
 
 export async function POST(req: Request) {
     try {
@@ -7,6 +8,11 @@ export async function POST(req: Request) {
 
         if (!name || !email || !message) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+        }
+
+        const visitorEmail = String(email).trim();
+        if (!isValidEmailBasic(visitorEmail)) {
+            return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
         }
 
         const transporter = nodemailer.createTransport({
@@ -41,7 +47,7 @@ ${message}
                     
                     <div style="background: #fdfdfd; border-radius: 6px; padding: 15px; margin: 20px 0; border: 1px solid #eee;">
                         <p style="margin: 5px 0;"><strong>Name:</strong> ${name}</p>
-                        <p style="margin: 5px 0;"><strong>Email:</strong> ${email}</p>
+                        <p style="margin: 5px 0;"><strong>Email:</strong> ${visitorEmail}</p>
                         <p style="margin: 5px 0;"><strong>Phone:</strong> ${phone || 'Not provided'}</p>
                     </div>
                     

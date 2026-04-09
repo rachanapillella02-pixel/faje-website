@@ -113,10 +113,41 @@ export function validateCheckoutOrder(data: {
     return { ok: true };
 }
 
-const SIMPLE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/** Total address length cap (common SMTP practice). */
+export const EMAIL_MAX_LENGTH = 254;
+
+/**
+ * Well-formed ASCII email: local@domain.tld
+ * - Single @, plausible DNS-style host, TLD segment at least 2 characters.
+ * Pair with isValidEmailBasic() for consecutive-dot and edge checks.
+ */
+export const WELL_FORMED_EMAIL_REGEX =
+    /^[a-zA-Z0-9][a-zA-Z0-9._%+-]{0,63}@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
 export function isValidEmailBasic(email: string): boolean {
-    return SIMPLE_EMAIL.test(email.trim());
+    const s = email.trim();
+    if (!s || s.length > EMAIL_MAX_LENGTH) return false;
+    if (s.indexOf('@') !== s.lastIndexOf('@')) return false;
+    const at = s.indexOf('@');
+    if (at < 1) return false;
+    const local = s.slice(0, at);
+    const domain = s.slice(at + 1);
+    if (!domain.includes('.')) return false;
+    if (local.includes('..') || domain.includes('..')) return false;
+    if (local.startsWith('.') || local.endsWith('.')) return false;
+    if (domain.startsWith('.') || domain.endsWith('.') || domain.startsWith('-') || domain.endsWith('-')) {
+        return false;
+    }
+    const tld = domain.slice(domain.lastIndexOf('.') + 1);
+    if (
+        tld.length < 2 ||
+        !/^[a-zA-Z0-9-]+$/.test(tld) ||
+        tld.startsWith('-') ||
+        tld.endsWith('-')
+    ) {
+        return false;
+    }
+    return WELL_FORMED_EMAIL_REGEX.test(s);
 }
 
 export function isValidCustomerName(name: string): boolean {
