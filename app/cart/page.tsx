@@ -11,8 +11,13 @@ import {
     IN_MOBILE_E164,
     deliveryChargeForSubtotal,
     getInPhoneDigits,
+    isValidCustomerName,
+    isValidEmailBasic,
     normalizeInPhoneDigits,
+    validateCheckoutCustomer,
 } from '@/lib/checkoutPricing';
+import { IndianStateCombobox } from '@/components/IndianStateCombobox';
+import { isValidIndianPincode, isValidIndianState, normalizeIndianState } from '@/lib/indianAddress';
 import './cart.css';
 
 const UPI_NUMBER = process.env.NEXT_PUBLIC_UPI_ID || '9618848356';
@@ -65,6 +70,18 @@ export default function CartPage() {
     const amountToFreeDelivery = Math.max(0, FREE_DELIVERY_SUBTOTAL_EXCEEDS + 1 - total);
     const grandTotal = total + currentDeliveryCharge - getCouponDiscount();
 
+    const canProceedContact =
+        isValidCustomerName(customer.name) &&
+        isValidEmailBasic(customer.email) &&
+        IN_MOBILE_E164.test(customer.phone);
+
+    const canProceedAddress =
+        customer.houseNo.trim().length > 0 &&
+        customer.street.trim().length > 0 &&
+        customer.city.trim().length > 0 &&
+        isValidIndianState(customer.state) &&
+        isValidIndianPincode(customer.pincode);
+
     // Build UPI deeplink and QR
     const upiString = `upi://pay?pa=${UPI_NUMBER}@ybl&pn=${encodeURIComponent(UPI_NAME)}&am=${grandTotal}&cu=INR&tn=${encodeURIComponent('FAJE Order')}`;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiString)}&color=5a2329&bgcolor=ffffff&margin=8`;
@@ -85,8 +102,20 @@ export default function CartPage() {
 
     const handleSubmitScreenshot = async () => {
         if (!screenshot) return;
+        const pin = customer.pincode.trim();
+        const canonicalState = normalizeIndianState(customer.state);
+        const fullAddress = `${customer.houseNo}, ${customer.street}${customer.landmark ? ', ' + customer.landmark : ''}, ${customer.city}, ${canonicalState ?? customer.state.trim()} - ${pin}`;
+        const customerCheck = validateCheckoutCustomer({
+            ...customer,
+            state: canonicalState ?? customer.state,
+            pincode: pin,
+            address: fullAddress,
+        });
+        if (!customerCheck.ok) {
+            alert(customerCheck.message);
+            return;
+        }
         setIsSubmitting(true);
-        const fullAddress = `${customer.houseNo}, ${customer.street}${customer.landmark ? ', ' + customer.landmark : ''}, ${customer.city}, ${customer.state} - ${customer.pincode}`;
         try {
             const formData = new FormData();
             formData.append('screenshot', screenshot);
@@ -97,7 +126,12 @@ export default function CartPage() {
                 couponCode: couponApplied ? couponCode.trim().toUpperCase() : '',
                 total: grandTotal,
                 items: cart.map(item => ({ name: item.name, size: item.size, quantity: item.quantity, price: item.price })),
-                customer: { ...customer, address: fullAddress }
+                customer: {
+                    ...customer,
+                    state: canonicalState!,
+                    pincode: pin,
+                    address: fullAddress,
+                },
             }));
 
             const res = await fetch('/api/checkout', {
@@ -371,8 +405,8 @@ export default function CartPage() {
                                     <button
                                         className="btn btn-paid"
                                         onClick={() => setPayStep('address')}
-                                        disabled={!customer.name || !customer.email || !IN_MOBILE_E164.test(customer.phone)}
-                                        style={{ marginTop: 12, opacity: (!customer.name || !customer.email || !IN_MOBILE_E164.test(customer.phone)) ? 0.7 : 1 }}
+                                        disabled={!canProceedContact}
+                                        style={{ marginTop: 12, opacity: !canProceedContact ? 0.7 : 1 }}
                                      >
                                         Next: Delivery Address →
                                     </button>
@@ -400,9 +434,30 @@ export default function CartPage() {
                                     <input type="text" placeholder="Landmark (Optional)" value={customer.landmark} onChange={e => setCustomer({ ...customer, landmark: e.target.value })} className="form-input" />
                                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                                         <input type="text" placeholder="City *" value={customer.city} onChange={e => setCustomer({ ...customer, city: e.target.value })} className="form-input" required />
-                                        <input type="text" placeholder="State *" value={customer.state} onChange={e => setCustomer({ ...customer, state: e.target.value })} className="form-input" required />
+                                        <IndianStateCombobox
+                                            value={customer.state}
+                                            onChange={(state) => setCustomer({ ...customer, state })}
+                                        />
                                     </div>
-                                    <input type="text" placeholder="Pincode *" value={customer.pincode} onChange={e => setCustomer({ ...customer, pincode: e.target.value })} className="form-input" required maxLength={6} />
+                                    <div>
+                                        <input
+                                            type="text"
+                                            inputMode="numeric"
+                                            autoComplete="postal-code"
+                                            placeholder="PIN code * (6 digits)"
+                                            value={customer.pincode}
+                                            onChange={e => setCustomer({ ...customer, pincode: e.target.value.replace(/\D/g, '').slice(0, 6) })}
+                                            className="form-input"
+                                            required
+                                            maxLength={6}
+                                            pattern="[1-9][0-9]{5}"
+                                            title="6-digit Indian PIN (first digit 1–9)"
+                                            aria-invalid={customer.pincode.length > 0 && !isValidIndianPincode(customer.pincode)}
+                                        />
+                                        <p style={{ fontSize: 11, color: '#888', marginTop: 6, marginBottom: 0 }}>
+                                            Valid 6-digit PIN (cannot start with 0)
+                                        </p>
+                                    </div>
 
                                     {/* Coupon Code */}
                                     <p style={{ fontSize: 12, fontWeight: 600, color: '#5a2329', marginTop: 14, marginBottom: 4, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Coupon Code</p>
@@ -439,8 +494,8 @@ export default function CartPage() {
                                     <button
                                         className="btn btn-paid"
                                         onClick={() => setPayStep('qr')}
-                                        disabled={!customer.houseNo || !customer.street || !customer.city || !customer.state || !customer.pincode}
-                                        style={{ marginTop: 12, opacity: (!customer.houseNo || !customer.street || !customer.city || !customer.state || !customer.pincode) ? 0.7 : 1 }}
+                                        disabled={!canProceedAddress}
+                                        style={{ marginTop: 12, opacity: !canProceedAddress ? 0.7 : 1 }}
                                     >
                                         Proceed to Payment →
                                     </button>

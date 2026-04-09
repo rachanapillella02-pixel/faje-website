@@ -1,3 +1,5 @@
+import { isValidIndianPincode, isValidIndianState } from '@/lib/indianAddress';
+
 /**
  * Single source of truth for cart checkout: delivery rules, coupons, and phone format.
  * Used by the cart UI and /api/checkout validation.
@@ -113,16 +115,26 @@ export function validateCheckoutOrder(data: {
 
 const SIMPLE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+export function isValidEmailBasic(email: string): boolean {
+    return SIMPLE_EMAIL.test(email.trim());
+}
+
+export function isValidCustomerName(name: string): boolean {
+    return name.trim().length >= 2;
+}
+
 export function validateCheckoutCustomer(customer: {
     name?: string;
     email?: string;
     phone?: string;
     address?: string;
+    state?: string;
+    pincode?: string;
 }): { ok: true } | { ok: false; message: string } {
-    if (!customer?.name?.trim()) {
-        return { ok: false, message: 'Missing customer name' };
+    if (!customer?.name?.trim() || !isValidCustomerName(customer.name)) {
+        return { ok: false, message: 'Invalid customer name' };
     }
-    if (!customer?.email?.trim() || !SIMPLE_EMAIL.test(customer.email.trim())) {
+    if (!customer?.email?.trim() || !isValidEmailBasic(customer.email)) {
         return { ok: false, message: 'Invalid email' };
     }
     if (!customer?.phone || !IN_MOBILE_E164.test(customer.phone)) {
@@ -130,6 +142,12 @@ export function validateCheckoutCustomer(customer: {
     }
     if (!customer?.address?.trim()) {
         return { ok: false, message: 'Missing address' };
+    }
+    if (!customer?.state?.trim() || !isValidIndianState(customer.state)) {
+        return { ok: false, message: 'Invalid state' };
+    }
+    if (!customer?.pincode?.trim() || !isValidIndianPincode(customer.pincode)) {
+        return { ok: false, message: 'Invalid PIN code' };
     }
     return { ok: true };
 }

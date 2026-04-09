@@ -45,7 +45,14 @@ export async function POST(request: Request) {
             couponCode?: string;
             total: number;
             items: { quantity: number; name: string; size: string; price: number }[];
-            customer?: { name?: string; email?: string; phone?: string; address?: string };
+            customer?: {
+                name?: string;
+                email?: string;
+                phone?: string;
+                address?: string;
+                state?: string;
+                pincode?: string;
+            };
         };
 
         try {
